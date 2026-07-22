@@ -1,15 +1,29 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { tr } from '@/lib/translations';
+import { formatFCFA } from '@/lib/products';
+import type { CartItem } from '@/context/AppContext';
+
+function CartItemImage({ item, lang }: { item: CartItem; lang: 'fr' | 'en' }) {
+  const [err, setErr] = useState(false);
+  const name = lang === 'fr' ? item.name : item.nameEn;
+  if (!item.image || err) return (
+    <div style={{width:85,height:85,display:'flex',alignItems:'center',justifyContent:'center',padding:'0 8px'}}>
+      <span style={{fontFamily:"'DM Serif Display',serif",fontSize:12,textAlign:'center',lineHeight:1.3,color:'rgba(14,11,8,0.3)',fontStyle:'italic'}}>{name}</span>
+    </div>
+  );
+  return <Image src={item.image} alt="" width={85} height={85} onError={()=>setErr(true)} style={{objectFit:'contain',mixBlendMode:'multiply'}} />;
+}
 
 export default function Cart() {
   const { lang, cart, removeFromCart } = useApp();
   const T = tr[lang];
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const waItems = cart.map(i=>`${lang==='fr'?i.name:i.nameEn} x${i.qty}`).join(', ');
-  const waLink = `https://wa.me/22900000000?text=${encodeURIComponent(`Bonjour Ébène! Je commande: ${waItems}. Total: ${total}€. Cotonou.`)}`;
+  const waLink = `https://wa.me/22900000000?text=${encodeURIComponent(`Bonjour Ébène! Je commande: ${waItems}. Total: ${formatFCFA(total)}. Cotonou.`)}`;
 
   return (
     <section style={{minHeight:'100vh',background:'#F7F3EE',padding:'140px 80px 80px'}}>
@@ -28,16 +42,16 @@ export default function Cart() {
               {cart.map(item=>(
                 <div key={item.id} style={{display:'flex',gap:24,padding:'28px 0',borderBottom:'1px solid #eee',alignItems:'center'}}>
                   <div style={{width:90,height:90,background:'#F2EEE9',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,overflow:'hidden'}}>
-                    <Image src={item.image} alt="" width={85} height={85} style={{objectFit:'contain',mixBlendMode:'multiply'}} />
+                    <CartItemImage item={item} lang={lang} />
                   </div>
                   <div style={{flex:1}}>
                     <h3 style={{fontFamily:"'DM Serif Display',serif",fontSize:22,margin:'0 0 4px',fontWeight:400}}>{lang==='fr'?item.name:item.nameEn}</h3>
-                    <p style={{fontSize:11,color:'#bbb',letterSpacing:2,textTransform:'uppercase',margin:'0 0 6px',fontWeight:300}}>{lang==='fr'?item.mat:item.matEn}</p>
+                    <p style={{fontSize:12,color:'#999',letterSpacing:2,textTransform:'uppercase',margin:'0 0 6px',fontWeight:500}}>{lang==='fr'?item.mat:item.matEn}</p>
                     <p style={{fontSize:13,color:'#888',margin:0,fontWeight:400}}>{T.size}: {item.size}</p>
                   </div>
                   <div style={{textAlign:'right',display:'flex',flexDirection:'column',alignItems:'flex-end',gap:10}}>
-                    <p style={{fontFamily:"'DM Serif Display',serif",fontSize:24,margin:0}}>{item.price}€</p>
-                    <button onClick={()=>removeFromCart(item.id)} style={{fontSize:9,letterSpacing:2,color:'#bbb',background:'none',border:'none',cursor:'pointer',fontFamily:"'Jost',sans-serif",textTransform:'uppercase',fontWeight:400,padding:0}}>{T.remove}</button>
+                    <p style={{fontFamily:"'DM Serif Display',serif",fontSize:18,margin:0}}>{formatFCFA(item.price)}</p>
+                    <button onClick={()=>removeFromCart(item.id)} style={{fontSize:11,letterSpacing:2,color:'#999',background:'none',border:'none',cursor:'pointer',fontFamily:"'Jost',sans-serif",textTransform:'uppercase',fontWeight:500,padding:0}}>{T.remove}</button>
                   </div>
                 </div>
               ))}
@@ -45,15 +59,15 @@ export default function Cart() {
             <div style={{background:'#0E0B08',padding:40,position:'sticky',top:120}}>
               <h2 style={{fontFamily:"'DM Serif Display',serif",fontSize:28,color:'#F7F3EE',margin:'0 0 32px',fontWeight:400}}>{T.orderSummary}</h2>
               <div style={{display:'flex',justifyContent:'space-between',marginBottom:20,alignItems:'baseline'}}>
-                <span style={{fontSize:11,color:'rgba(247,243,238,0.4)',letterSpacing:2,textTransform:'uppercase',fontWeight:400}}>{T.subtotal}</span>
-                <span style={{fontFamily:"'DM Serif Display',serif",fontSize:22,color:'#F7F3EE'}}>{total}€</span>
+                <span style={{fontSize:12,color:'rgba(247,243,238,0.6)',letterSpacing:2,textTransform:'uppercase',fontWeight:500}}>{T.subtotal}</span>
+                <span style={{fontFamily:"'DM Serif Display',serif",fontSize:20,color:'#F7F3EE'}}>{formatFCFA(total)}</span>
               </div>
               <div style={{borderTop:'1px solid rgba(255,255,255,0.08)',paddingTop:20,marginBottom:32,display:'flex',justifyContent:'space-between',alignItems:'baseline'}}>
                 <span style={{fontSize:13,color:'#F7F3EE',fontWeight:500,letterSpacing:1}}>Total</span>
-                <span style={{fontFamily:"'Kablammo',system-ui",fontSize:32,color:'#C4763A'}}>{total}€</span>
+                <span style={{fontFamily:"'Kablammo',system-ui",fontSize:28,color:'#C4763A'}}>{formatFCFA(total)}</span>
               </div>
-              <a href={waLink} target="_blank" rel="noreferrer" style={{display:'block',background:'#C4763A',color:'#F7F3EE',textAlign:'center',padding:16,fontSize:11,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Jost',sans-serif",fontWeight:500,marginBottom:12}}>{T.orderWhatsApp} →</a>
-              <p style={{fontSize:10,color:'rgba(247,243,238,0.25)',textAlign:'center',margin:0,fontWeight:300,letterSpacing:1}}>{T.orPayOnline}</p>
+              <a href={waLink} target="_blank" rel="noreferrer" style={{display:'block',background:'#C4763A',color:'#F7F3EE',textAlign:'center',padding:16,fontSize:12,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Jost',sans-serif",fontWeight:600,marginBottom:12}}>{T.orderWhatsApp} →</a>
+              <p style={{fontSize:11,color:'rgba(247,243,238,0.45)',textAlign:'center',margin:0,fontWeight:400,letterSpacing:1}}>{T.orPayOnline}</p>
             </div>
           </div>
         </>

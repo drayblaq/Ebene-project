@@ -100,7 +100,7 @@ In `lib/products.ts`, add an object to the `products` array:
   desc: 'Description FR',
   descEn: 'Description EN',
   cat: 'shirts', // shirts | trousers | caps | dresses | jackets
-  price: 120,
+  price: 78700, // FCFA — convert from EUR: 1 EUR = 655.957 XOF, round to nearest 100
   badge: 'NEW', // 'NEW' | 'BEST' | '-15%' | 'SOLD OUT' | ''
   sizes: ['S', 'M', 'L', 'XL'],
   dark: false,   // true = dark card theme

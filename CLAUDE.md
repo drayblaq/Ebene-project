@@ -24,7 +24,7 @@ Bilingual: French (default) + English.
 - Never remove the 3D card interaction logic
 - Keep amber #C4763A as the accent color
 - Year is 2026, location is Cotonou, Bénin
-- Prices in € (Euros)
+- Prices in FCFA (West African CFA franc, XOF) — format as "62 300 FCFA" using French thousand-separator (space)
 
 ## Adding a product
 Add to the `products` array in `lib/products.ts` with all required fields (id, name, nameEn, mat, matEn, desc, descEn, cat, price, badge, sizes, dark, bg, image).
