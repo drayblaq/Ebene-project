@@ -9,7 +9,7 @@ type AppCtx = {
   lang: Lang;
   toggleLang: () => void;
   cart: CartItem[];
-  addToCart: (p: Product) => void;
+  addToCart: (p: Product, size?: string) => void;
   removeFromCart: (id: number) => void;
 };
 
@@ -21,12 +21,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const toggleLang = () => setLang(l => l === 'fr' ? 'en' : 'fr');
 
-  const addToCart = (p: Product) => {
+  const addToCart = (p: Product, size?: string) => {
     if (p.badge === 'SOLD OUT') return;
+    const chosenSize = size ?? p.sizes[0];
     setCart(c => {
-      const i = c.findIndex(x => x.id === p.id);
+      const i = c.findIndex(x => x.id === p.id && x.size === chosenSize);
       if (i >= 0) { const n=[...c]; n[i]={...n[i],qty:n[i].qty+1}; return n; }
-      return [...c, { ...p, qty: 1, size: p.sizes[0] }];
+      return [...c, { ...p, qty: 1, size: chosenSize }];
     });
   };
 

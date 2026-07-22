@@ -26,6 +26,7 @@ export const tr = {
     addressLabel:'Adresse', social:'Réseaux sociaux', nameLabel:'Nom complet',
     messageLabel:'Message', send:'Envoyer', legal:'Mentions légales', privacy:'Confidentialité',
     addToCart:'Ajouter', material:'Matière',
+    backToCollection:'Retour à la collection', selectSize:'Choisir la taille', soldOut:'Épuisé',
   },
   en: {
     collection:'Collection', histoire:'Story', contact:'Contact', panier:'Cart',
@@ -52,6 +53,7 @@ export const tr = {
     addressLabel:'Address', social:'Social media', nameLabel:'Full name',
     messageLabel:'Message', send:'Send', legal:'Legal', privacy:'Privacy',
     addToCart:'Add', material:'Material',
+    backToCollection:'Back to collection', selectSize:'Select size', soldOut:'Sold out',
   }
 } as const;
 

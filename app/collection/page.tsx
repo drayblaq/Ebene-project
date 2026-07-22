@@ -23,8 +23,8 @@ export default function Collection() {
   const filtered = filter === 'all' ? products : products.filter(p => p.cat === filter);
 
   return (
-    <section style={{minHeight:'100vh',background:'#F7F3EE',padding:'140px 80px 100px'}}>
-      <div className="fade-in" style={{marginBottom:60}}>
+    <section className="sec-collection" style={{minHeight:'100vh',background:'#F7F3EE',padding:'140px 80px 100px'}}>
+      <div className="fade-in collection-header" style={{marginBottom:60}}>
         <p style={{fontSize:10,letterSpacing:5,textTransform:'uppercase',color:'#C4763A',margin:'0 0 18px',fontWeight:500}}>{T.sectionFeatured}</p>
         <h1 style={{fontFamily:"'DM Serif Display',serif",fontSize:'clamp(44px,5vw,80px)',margin:'0 0 48px',lineHeight:1.05}}>{T.collectionTitle}</h1>
         <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
@@ -36,7 +36,7 @@ export default function Collection() {
         </div>
       </div>
       <p style={{fontSize:9,letterSpacing:3,textTransform:'uppercase',color:'#bbb',fontWeight:300,textAlign:'center',marginBottom:48}}>{T.rotateHint}</p>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))',gap:'80px 32px',alignItems:'start'}}>
+      <div className="collection-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))',gap:'80px 32px',alignItems:'start'}}>
         {filtered.map((p,i)=>(
           <div key={p.id} style={{justifySelf:'center'}}>
             <ProductCard product={p} lang={lang} onAdd={addToCart} offsetTop={offsets[i%4]} />

@@ -31,7 +31,7 @@ export const products: Product[] = [
 ];
 
 export function formatFCFA(price: number): string {
-  return price.toLocaleString('fr-FR') + ' FCFA';
+  return price.toLocaleString('en-US') + ' FCFA';
 }
 
 export function getCatLabel(cat: string, lang: 'fr' | 'en'): string {
