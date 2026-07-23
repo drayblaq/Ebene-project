@@ -28,11 +28,11 @@ export default function Cursor() {
       if (dot.current && ring.current) {
         if (el) {
           dot.current.style.width='44px'; dot.current.style.height='44px';
-          dot.current.style.background='rgba(196,118,58,0.2)';
+          dot.current.style.background='rgba(129,77,45,0.2)';
           ring.current.style.width='4px'; ring.current.style.height='4px';
         } else {
           dot.current.style.width='10px'; dot.current.style.height='10px';
-          dot.current.style.background='#C4763A';
+          dot.current.style.background='#814D2D';
           ring.current.style.width='32px'; ring.current.style.height='32px';
         }
       }
@@ -43,8 +43,8 @@ export default function Cursor() {
 
   return (
     <>
-      <div ref={dot} style={{position:'fixed',top:0,left:0,width:10,height:10,background:'#C4763A',borderRadius:'50%',pointerEvents:'none',zIndex:9999,transform:'translate(-50%,-50%)',transition:'width 0.2s,height 0.2s,background 0.2s'}} />
-      <div ref={ring} style={{position:'fixed',top:0,left:0,width:32,height:32,border:'1.5px solid rgba(14,11,8,0.2)',borderRadius:'50%',pointerEvents:'none',zIndex:9998,transform:'translate(-50%,-50%)',transition:'width 0.35s,height 0.35s'}} />
+      <div ref={dot} style={{position:'fixed',top:0,left:0,width:10,height:10,background:'#814D2D',borderRadius:'50%',pointerEvents:'none',zIndex:9999,transform:'translate(-50%,-50%)',transition:'width 0.2s,height 0.2s,background 0.2s'}} />
+      <div ref={ring} style={{position:'fixed',top:0,left:0,width:32,height:32,border:'1.5px solid rgba(0,0,0,0.2)',borderRadius:'50%',pointerEvents:'none',zIndex:9998,transform:'translate(-50%,-50%)',transition:'width 0.35s,height 0.35s'}} />
     </>
   );
 }

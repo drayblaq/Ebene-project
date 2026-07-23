@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { tr } from '@/lib/translations';
@@ -15,21 +16,20 @@ export default function Navbar() {
     if (!nav) return;
     const handler = () => {
       const scrolled = window.scrollY > 70;
-      nav.style.background = scrolled ? 'rgba(247,243,238,0.94)' : 'transparent';
+      nav.style.background = scrolled ? 'rgba(255,255,255,0.94)' : 'transparent';
       nav.style.backdropFilter = scrolled ? 'blur(14px)' : 'none';
-      nav.style.boxShadow = scrolled ? '0 1px 0 rgba(14,11,8,0.07)' : 'none';
+      nav.style.boxShadow = scrolled ? '0 1px 0 rgba(0,0,0,0.07)' : 'none';
     };
     window.addEventListener('scroll', handler, { passive: true });
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const lnk: React.CSSProperties = { fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', fontWeight: 500 };
+  const lnk: React.CSSProperties = { fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', fontWeight: 500, fontFamily: "'Aoboshi One', sans-serif" };
 
   return (
     <>
@@ -44,19 +44,21 @@ export default function Navbar() {
         {/* Mobile left: hamburger */}
         <button className="nav-mobile-only" onClick={() => setMenuOpen(o => !o)} aria-label="Menu" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'none' }}>
           {menuOpen ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E0B08" strokeWidth="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           ) : (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0E0B08" strokeWidth="1.8"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="1.8"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
           )}
         </button>
 
-        {/* Logo */}
-        <Link href="/" style={{ fontFamily: "'Kablammo',system-ui", fontSize: 26, fontWeight: 400 }}>Ébène</Link>
+        {/* Logo — wordmark on light/transparent background */}
+        <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+          <Image src="/images/logo+text.png" alt="Ébène" width={110} height={34} style={{ objectFit: 'contain', height: 28, width: 'auto' }} priority />
+        </Link>
 
         {/* Desktop right links */}
         <div className="nav-right-links" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
           <Link href="/contact" className="nav-lnk" style={lnk}>{T.contact}</Link>
-          <button onClick={toggleLang} style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', fontWeight: 600, border: '1.5px solid rgba(14,11,8,0.3)', padding: '6px 12px', background: 'none', cursor: 'pointer', fontFamily: "'Jost',sans-serif" }}>
+          <button onClick={toggleLang} style={{ fontSize: 10, letterSpacing: 4, textTransform: 'uppercase', fontWeight: 600, border: '1.5px solid rgba(0,0,0,0.3)', padding: '6px 12px', background: 'none', cursor: 'pointer', fontFamily: "'Aoboshi One', sans-serif" }}>
             {lang === 'fr' ? 'EN' : 'FR'}
           </button>
           <Link href="/cart" className="nav-lnk" style={{ ...lnk, display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -67,7 +69,7 @@ export default function Navbar() {
 
         {/* Mobile right: lang + cart */}
         <div className="nav-mobile-only" style={{ display: 'none', gap: 16, alignItems: 'center' }}>
-          <button onClick={toggleLang} style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', fontWeight: 600, border: '1.5px solid rgba(14,11,8,0.3)', padding: '5px 10px', background: 'none', cursor: 'pointer', fontFamily: "'Jost',sans-serif" }}>
+          <button onClick={toggleLang} style={{ fontSize: 9, letterSpacing: 3, textTransform: 'uppercase', fontWeight: 600, border: '1.5px solid rgba(0,0,0,0.3)', padding: '5px 10px', background: 'none', cursor: 'pointer', fontFamily: "'Aoboshi One', sans-serif" }}>
             {lang === 'fr' ? 'EN' : 'FR'}
           </button>
           <Link href="/cart" onClick={() => setMenuOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 10, letterSpacing: 3, textTransform: 'uppercase', fontWeight: 500 }}>
@@ -79,14 +81,14 @@ export default function Navbar() {
 
       {/* Mobile full-screen overlay menu */}
       {menuOpen && (
-        <div style={{ position: 'fixed', inset: 0, background: '#F7F3EE', zIndex: 190, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 44 }}>
+        <div style={{ position: 'fixed', inset: 0, background: '#FFFFFF', zIndex: 190, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 44 }}>
           {[
             { label: T.collection, href: '/collection' },
             { label: T.histoire, href: '/' },
             { label: T.contact, href: '/contact' },
             { label: T.panier + (cart.length ? ` (${cart.length})` : ''), href: '/cart' },
           ].map(({ label, href }) => (
-            <Link key={href} href={href} onClick={() => setMenuOpen(false)} style={{ fontFamily: "'DM Serif Display',serif", fontSize: 36, fontWeight: 400, color: '#0E0B08', letterSpacing: 1 }}>
+            <Link key={href} href={href} onClick={() => setMenuOpen(false)} style={{ fontFamily: "'Joti One', cursive", fontSize: 36, fontWeight: 400, color: '#000000', letterSpacing: 1 }}>
               {label}
             </Link>
           ))}

@@ -4,16 +4,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: '#F7F3EE',
-        ebony: '#0E0B08',
-        amber: '#C4763A',
-        'amber-dark': '#A85E28',
-        'dark-brown': '#1A1410',
+        white: '#FFFFFF',
+        black: '#000000',
+        brown: '#814D2D',
+        'brown-dark': '#5E3520',
       },
       fontFamily: {
-        kablammo: ['Kablammo', 'system-ui'],
-        serif: ['"DM Serif Display"', 'serif'],
-        sans: ['Jost', 'sans-serif'],
+        joti: ['"Joti One"', 'cursive'],
+        sans: ['"Aoboshi One"', 'sans-serif'],
       },
     },
   },

@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { products, getCatLabel, formatFCFA } from '@/lib/products';
@@ -9,16 +9,15 @@ import { tr } from '@/lib/translations';
 export default function ProductDetail({ params }: { params: { id: string } }) {
   const { lang, addToCart } = useApp();
   const T = tr[lang];
-  const router = useRouter();
 
   const product = products.find(p => p.id === Number(params.id));
 
   if (!product) {
     return (
-      <section style={{minHeight:'100vh',background:'#F7F3EE',display:'flex',alignItems:'center',justifyContent:'center'}}>
+      <section style={{minHeight:'100vh',background:'#FFFFFF',display:'flex',alignItems:'center',justifyContent:'center'}}>
         <div style={{textAlign:'center'}}>
-          <p style={{fontSize:12,letterSpacing:4,textTransform:'uppercase',color:'#C4763A',fontWeight:700,marginBottom:24}}>Produit introuvable</p>
-          <Link href="/collection" style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',fontWeight:700,color:'#0E0B08'}}>← {T.backToCollection}</Link>
+          <p style={{fontSize:12,letterSpacing:4,textTransform:'uppercase',color:'#814D2D',fontWeight:700,marginBottom:24,fontFamily:"'Aoboshi One',sans-serif"}}>Produit introuvable</p>
+          <Link href="/collection" style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',fontWeight:700,color:'#000000',fontFamily:"'Aoboshi One',sans-serif"}}>← {T.backToCollection}</Link>
         </div>
       </section>
     );
@@ -29,10 +28,11 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const name = lang === 'fr' ? p.name : p.nameEn;
   const mat = lang === 'fr' ? p.mat : p.matEn;
   const desc = lang === 'fr' ? p.desc : p.descEn;
-  const d = p.dark;
+  const badge = lang === 'fr' ? p.badge : (p.badgeEn ?? p.badge);
 
   const [selectedSize, setSelectedSize] = useState(p.sizes[0]);
   const [added, setAdded] = useState(false);
+  const [showBack, setShowBack] = useState(false);
 
   function handleAdd() {
     if (isSO) return;
@@ -41,66 +41,76 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
     setTimeout(() => setAdded(false), 1800);
   }
 
-  const waText = encodeURIComponent(`Bonjour Ébène! Je veux commander: ${name} — Taille ${selectedSize} (${formatFCFA(p.price)}) - Cotonou, Bénin`);
+  const waText = encodeURIComponent(`Bonjour Ébène! Je veux précommander: ${name}, Taille ${selectedSize}, Cotonou, Bénin`);
 
   return (
-    <section style={{minHeight:'100vh',background:'#F7F3EE',paddingTop:100}}>
+    <>
+    <section style={{minHeight:'100vh',background:'#FFFFFF',paddingTop:100}}>
       <div className="product-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',minHeight:'calc(100vh - 100px)'}}>
 
-        {/* LEFT — image / color block */}
-        <div className="product-img-col" style={{background:p.bg,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',position:'sticky',top:100,height:'calc(100vh - 100px)',overflow:'hidden'}}>
-          <span style={{fontFamily:"'DM Serif Display',serif",fontSize:'clamp(22px,3vw,38px)',textAlign:'center',lineHeight:1.3,color:d?'rgba(247,243,238,0.4)':'rgba(14,11,8,0.25)',fontStyle:'italic',padding:'0 48px',userSelect:'none'}}>{name}</span>
-          {p.badge && (
+        {/* LEFT — product image */}
+        <div className="product-img-col" style={{background:p.bg,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',position:'sticky',top:100,height:'calc(100vh - 100px)',overflow:'hidden',border:'1px solid rgba(0,0,0,0.06)',gap:20}}>
+          <div style={{position:'relative',width:'80%',maxWidth:400,aspectRatio:'3/4',display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <Image
+              src={showBack && p.imageBack ? p.imageBack : p.image}
+              alt={name}
+              fill
+              style={{objectFit:'contain'}}
+              priority
+            />
+          </div>
+          {p.imageBack && (
+            <div style={{display:'flex',gap:12}}>
+              <button onClick={()=>setShowBack(false)} style={{fontSize:9,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700,padding:'6px 14px',border:`1.5px solid ${!showBack?'#000000':'rgba(0,0,0,0.2)'}`,background:!showBack?'#000000':'transparent',color:!showBack?'#FFFFFF':'#000000',cursor:'pointer'}}>
+                {lang==='fr'?'Avant':'Front'}
+              </button>
+              <button onClick={()=>setShowBack(true)} style={{fontSize:9,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700,padding:'6px 14px',border:`1.5px solid ${showBack?'#000000':'rgba(0,0,0,0.2)'}`,background:showBack?'#000000':'transparent',color:showBack?'#FFFFFF':'#000000',cursor:'pointer'}}>
+                {lang==='fr'?'Arrière':'Back'}
+              </button>
+            </div>
+          )}
+          {badge && (
             <div style={{
-              marginTop:32,
-              background:p.badge==='NEW'?'#0E0B08':p.badge==='SOLD OUT'?'#888':'#C4763A',
-              color:'#F7F3EE',fontSize:9,letterSpacing:3,padding:'6px 16px',
-              textTransform:'uppercase',fontWeight:700,fontFamily:"'Jost',sans-serif"
-            }}>{p.badge}</div>
+              background:p.badge==='NEW'?'#000000':p.badge==='SOLD OUT'?'#666':'#814D2D',
+              color:'#FFFFFF',fontSize:9,letterSpacing:3,padding:'6px 16px',
+              textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"
+            }}>{badge}</div>
           )}
         </div>
 
         {/* RIGHT — details */}
         <div className="product-detail-col" style={{padding:'64px 72px 80px',display:'flex',flexDirection:'column',justifyContent:'center',gap:0}}>
 
-          {/* back link */}
-          <Link href="/collection" style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',fontWeight:700,color:'#C4763A',textDecoration:'none',display:'inline-block',marginBottom:40}}>
+          <Link href="/collection" style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',fontWeight:700,color:'#814D2D',textDecoration:'none',display:'inline-block',marginBottom:40,fontFamily:"'Aoboshi One',sans-serif"}}>
             ← {T.backToCollection}
           </Link>
 
-          {/* category */}
-          <p style={{fontSize:11,letterSpacing:4,textTransform:'uppercase',color:'#C4763A',fontWeight:700,margin:'0 0 16px'}}>
+          <p style={{fontSize:11,letterSpacing:4,textTransform:'uppercase',color:'#814D2D',fontWeight:700,margin:'0 0 16px',fontFamily:"'Aoboshi One',sans-serif"}}>
             {getCatLabel(p.cat, lang)}
           </p>
 
-          {/* name */}
-          <h1 style={{fontFamily:"'DM Serif Display',serif",fontSize:'clamp(36px,4vw,60px)',fontWeight:400,margin:'0 0 24px',lineHeight:1.05,color:'#0E0B08'}}>
+          <h1 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(36px,4vw,60px)',fontWeight:400,margin:'0 0 24px',lineHeight:1.05,color:'#000000'}}>
             {name}
           </h1>
 
-          {/* price */}
-          <p style={{fontFamily:"'DM Serif Display',serif",fontSize:'clamp(22px,2.5vw,34px)',color:'#C4763A',margin:'0 0 32px',fontWeight:400}}>
-            {formatFCFA(p.price)}
+          <p style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(18px,2vw,26px)',color:'#814D2D',margin:'0 0 32px',fontWeight:400,letterSpacing:1}}>
+            {p.price === 0 ? T.priceTbd : formatFCFA(p.price)}
           </p>
 
-          {/* divider */}
-          <div style={{width:48,height:1.5,background:'#0E0B08',marginBottom:32}} />
+          <div style={{width:48,height:1.5,background:'#000000',marginBottom:32}} />
 
-          {/* material */}
           <div style={{marginBottom:24}}>
-            <p style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#0E0B08',fontWeight:700,margin:'0 0 6px'}}>{T.material}</p>
-            <p style={{fontSize:16,fontWeight:400,color:'#0E0B08',margin:0}}>{mat}</p>
+            <p style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#000000',fontWeight:700,margin:'0 0 6px',fontFamily:"'Aoboshi One',sans-serif"}}>{T.material}</p>
+            <p style={{fontSize:16,fontWeight:400,color:'#000000',margin:0,fontFamily:"'Aoboshi One',sans-serif"}}>{mat}</p>
           </div>
 
-          {/* description */}
           <div style={{marginBottom:40}}>
-            <p style={{fontSize:15,fontWeight:300,color:'rgba(14,11,8,0.7)',lineHeight:1.85,margin:0,maxWidth:380}}>{desc}</p>
+            <p style={{fontSize:15,fontWeight:400,color:'#000000',lineHeight:1.85,margin:0,maxWidth:380,fontFamily:"'Aoboshi One',sans-serif"}}>{desc}</p>
           </div>
 
-          {/* size selector */}
           {!isSO && (
             <div style={{marginBottom:40}}>
-              <p style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#0E0B08',fontWeight:700,margin:'0 0 14px'}}>{T.selectSize}</p>
+              <p style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#000000',fontWeight:700,margin:'0 0 14px',fontFamily:"'Aoboshi One',sans-serif"}}>{T.selectSize}</p>
               <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
                 {p.sizes.map(s => (
                   <button
@@ -110,13 +120,13 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                       padding:'10px 18px',
                       fontSize:11,
                       letterSpacing:2,
-                      fontFamily:"'Jost',sans-serif",
+                      fontFamily:"'Aoboshi One',sans-serif",
                       fontWeight:700,
                       textTransform:'uppercase',
                       cursor:'pointer',
-                      border:`1.5px solid ${s === selectedSize ? '#0E0B08' : '#ccc'}`,
-                      background: s === selectedSize ? '#0E0B08' : 'transparent',
-                      color: s === selectedSize ? '#F7F3EE' : '#0E0B08',
+                      border:`1.5px solid ${s === selectedSize ? '#000000' : 'rgba(0,0,0,0.2)'}`,
+                      background: s === selectedSize ? '#000000' : 'transparent',
+                      color: s === selectedSize ? '#FFFFFF' : '#000000',
                       transition:'all 0.15s',
                     }}
                   >
@@ -127,7 +137,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             </div>
           )}
 
-          {/* actions */}
           <div style={{display:'flex',flexDirection:'column',gap:12,maxWidth:380}}>
             <button
               onClick={handleAdd}
@@ -135,51 +144,97 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
               style={{
                 width:'100%',
                 padding:'18px 24px',
-                background: isSO ? '#ccc' : added ? '#2a6b3c' : '#0E0B08',
-                color:'#F7F3EE',
+                background: isSO ? '#aaa' : added ? '#2a6b3c' : '#000000',
+                color:'#FFFFFF',
                 border:'none',
                 fontSize:12,
                 letterSpacing:3,
                 textTransform:'uppercase',
-                fontFamily:"'Jost',sans-serif",
+                fontFamily:"'Aoboshi One',sans-serif",
                 fontWeight:700,
                 cursor: isSO ? 'not-allowed' : 'pointer',
                 transition:'background 0.3s',
               }}
             >
-              {isSO ? T.soldOut : added ? (lang === 'fr' ? 'Ajouté ✓' : 'Added ✓') : `${T.addToCart} — ${selectedSize}`}
+              {isSO ? T.soldOut : added ? (lang === 'fr' ? 'Ajouté ✓' : 'Added ✓') : `${T.addToCart} · ${selectedSize}`}
             </button>
 
             {!isSO && (
-              <a
-                href={`https://wa.me/22900000000?text=${waText}`}
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  display:'block',
-                  width:'100%',
-                  padding:'16px 24px',
-                  background:'transparent',
-                  color:'#0E0B08',
-                  border:'1.5px solid #0E0B08',
-                  fontSize:12,
-                  letterSpacing:3,
-                  textTransform:'uppercase',
-                  fontFamily:"'Jost',sans-serif",
-                  fontWeight:700,
-                  cursor:'pointer',
-                  textAlign:'center',
-                  textDecoration:'none',
-                  boxSizing:'border-box',
-                }}
-              >
-                WhatsApp →
-              </a>
+              <div style={{display:'flex',gap:10}}>
+                <a
+                  href={`https://wa.me/22900000000?text=${waText}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    flex:1,
+                    display:'block',
+                    padding:'16px 16px',
+                    background:'transparent',
+                    color:'#000000',
+                    border:'1.5px solid #000000',
+                    fontSize:11,
+                    letterSpacing:2,
+                    textTransform:'uppercase',
+                    fontFamily:"'Aoboshi One',sans-serif",
+                    fontWeight:700,
+                    cursor:'pointer',
+                    textAlign:'center',
+                    textDecoration:'none',
+                    boxSizing:'border-box',
+                  }}
+                >
+                  WhatsApp →
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    flex:1,
+                    display:'block',
+                    padding:'16px 16px',
+                    background:'transparent',
+                    color:'#814D2D',
+                    border:'1.5px solid #814D2D',
+                    fontSize:11,
+                    letterSpacing:2,
+                    textTransform:'uppercase',
+                    fontFamily:"'Aoboshi One',sans-serif",
+                    fontWeight:700,
+                    cursor:'pointer',
+                    textAlign:'center',
+                    textDecoration:'none',
+                    boxSizing:'border-box',
+                  }}
+                >
+                  Instagram →
+                </a>
+              </div>
             )}
           </div>
 
         </div>
       </div>
     </section>
+    {/* LIFESTYLE GALLERY */}
+    <section style={{background:'#000000'}}>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:3}}>
+        <div style={{position:'relative',aspectRatio:'2/3',overflow:'hidden'}}>
+          <Image src="/images/9.png" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
+        </div>
+        <div style={{position:'relative',aspectRatio:'2/3',overflow:'hidden'}}>
+          <Image src="/images/11.png" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
+        </div>
+      </div>
+      <div style={{padding:'36px 80px',textAlign:'center'}}>
+        <p style={{fontSize:10,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 6px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
+          {lang==='fr'?'POLO ÉBÈNE / PORTÉ':'ÉBÈNE POLO / WORN'}
+        </p>
+        <p style={{fontSize:13,color:'rgba(255,255,255,0.5)',margin:0,fontFamily:"'Aoboshi One',sans-serif",fontWeight:400,letterSpacing:1}}>
+          {lang==='fr'?'Cotonou, Bénin · 2026':'Cotonou, Benin · 2026'}
+        </p>
+      </div>
+    </section>
+    </>
   );
 }
