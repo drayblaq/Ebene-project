@@ -19,12 +19,8 @@ export default function Footer() {
           ))}
         </div>
       </div>
-      <div className="footer-bottom" style={{display:'flex',justifyContent:'space-between',alignItems:'center',paddingTop:28,borderTop:'1px solid rgba(255,255,255,0.05)',flexWrap:'wrap',gap:16}}>
+      <div className="footer-bottom" style={{paddingTop:28,borderTop:'1px solid rgba(255,255,255,0.05)',textAlign:'center'}}>
         <p style={{fontSize:11,color:'#FFFFFF',fontWeight:600,margin:0,letterSpacing:1}}>© 2026 Ébène · Cotonou, République du Bénin</p>
-        <div style={{display:'flex',gap:28}}>
-          <a href="#" className="nav-lnk" style={{fontSize:11,color:'#FFFFFF',fontWeight:600,letterSpacing:1}}>{T.legal}</a>
-          <a href="#" className="nav-lnk" style={{fontSize:11,color:'#FFFFFF',fontWeight:600,letterSpacing:1}}>{T.privacy}</a>
-        </div>
       </div>
     </footer>
   );
