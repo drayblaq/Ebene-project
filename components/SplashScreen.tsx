@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { useApp } from '@/context/AppContext';
 
 /*
  * Timing (total = 5 s from first visible frame):
@@ -12,6 +13,7 @@ import { useEffect, useRef, useState } from 'react';
  */
 
 export default function SplashScreen() {
+  const { unlockAudio } = useApp();
   const [visible, setVisible] = useState(true);
   const [fading, setFading] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -47,7 +49,7 @@ export default function SplashScreen() {
         }
       `}</style>
       <div
-        onClick={triggerDismiss}
+        onClick={() => { unlockAudio(); triggerDismiss(); }}
         style={{
           position: 'fixed',
           inset: 0,

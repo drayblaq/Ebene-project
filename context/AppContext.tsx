@@ -16,6 +16,7 @@ type AppCtx = {
   musicPlaying: boolean;
   musicNeedsGesture: boolean;
   toggleMusic: () => void;
+  unlockAudio: () => void;
 };
 
 const Ctx = createContext<AppCtx | null>(null);
@@ -64,6 +65,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return () => { audio.pause(); audio.src = ''; };
   }, []);
 
+  // Called inside a real user-gesture (e.g. splash tap) to guarantee unmuted playback
+  function unlockAudio() {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.muted = false;
+    if (audio.paused) {
+      audio.play().then(() => { setMusicPlaying(true); setMusicNeedsGesture(false); }).catch(() => {});
+    } else {
+      setMusicPlaying(true);
+      setMusicNeedsGesture(false);
+    }
+  }
+
   function toggleMusic() {
     const audio = audioRef.current;
     if (!audio) return;
@@ -103,7 +117,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     <Ctx.Provider value={{
       lang, toggleLang,
       cart, addToCart, removeFromCart, updateQty, clearCart,
-      musicPlaying, musicNeedsGesture, toggleMusic,
+      musicPlaying, musicNeedsGesture, toggleMusic, unlockAudio,
     }}>
       {children}
     </Ctx.Provider>
