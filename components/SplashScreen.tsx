@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { useApp } from '@/context/AppContext';
 
 /*
  * Timing (total = 5 s from first visible frame):
@@ -8,43 +7,32 @@ import { useApp } from '@/context/AppContext';
  *   0.8 – 4.55 s hold
  *   4.55 – 5.0 s outer div fades to opacity 0 (0.45 s ease-out)
  *
- * Tap at any point triggers fade immediately.
- *
  * Blank-flash fix: visible starts TRUE so the black overlay is present
- * on the very first paint. useEffect then hides it immediately for
- * returning visitors (sessionStorage key already set).
+ * on the very first paint. useEffect hides it for returning visitors.
  */
 
 export default function SplashScreen() {
-  // Start visible so the black overlay is present on the very first client paint —
-  // avoids the white flash that happens when useState(false) defers the overlay
-  // until after useEffect.
   const [visible, setVisible] = useState(true);
   const [fading, setFading] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dismissedRef = useRef(false);
-  const { startMusic } = useApp();
 
   useEffect(() => {
-    // Returning visitor: hide before any animation plays
     if (sessionStorage.getItem('ebene-splash')) {
       setVisible(false);
       return;
     }
     sessionStorage.setItem('ebene-splash', '1');
-
-    // 4 550 ms hold → then 450 ms fade → total 5 000 ms
-    timerRef.current = setTimeout(() => triggerDismiss(false), 4550);
+    timerRef.current = setTimeout(() => triggerDismiss(), 4550);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function triggerDismiss(byUserGesture: boolean) {
+  function triggerDismiss() {
     if (dismissedRef.current) return;
     dismissedRef.current = true;
     if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
     setFading(true);
-    startMusic(byUserGesture);
     setTimeout(() => setVisible(false), 450);
   }
 
@@ -59,7 +47,7 @@ export default function SplashScreen() {
         }
       `}</style>
       <div
-        onClick={() => triggerDismiss(true)}
+        onClick={triggerDismiss}
         style={{
           position: 'fixed',
           inset: 0,

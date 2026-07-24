@@ -16,7 +16,6 @@ type AppCtx = {
   musicPlaying: boolean;
   musicNeedsGesture: boolean;
   toggleMusic: () => void;
-  startMusic: (hasGesture: boolean) => void;
 };
 
 const Ctx = createContext<AppCtx | null>(null);
@@ -25,7 +24,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>('fr');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [musicPlaying, setMusicPlaying] = useState(false);
-  // true when autoplay was blocked and the toggle should pulse to invite a tap
   const [musicNeedsGesture, setMusicNeedsGesture] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -34,20 +32,25 @@ export function AppProvider({ children }: { children: ReactNode }) {
     audio.loop = true;
     audio.volume = 0.38;
     audioRef.current = audio;
+
+    // Attempt immediate autoplay
+    audio.play()
+      .then(() => { setMusicPlaying(true); })
+      .catch(() => {
+        // Browser blocked (no prior gesture). Start on first user interaction.
+        setMusicNeedsGesture(true);
+        const unlock = () => {
+          audio.play()
+            .then(() => { setMusicPlaying(true); setMusicNeedsGesture(false); })
+            .catch(() => {});
+        };
+        document.addEventListener('click',      unlock, { once: true });
+        document.addEventListener('touchstart', unlock, { once: true });
+        document.addEventListener('keydown',    unlock, { once: true });
+      });
+
     return () => { audio.pause(); audio.src = ''; };
   }, []);
-
-  // Called by SplashScreen on dismiss. hasGesture=true when user tapped to skip.
-  function startMusic(hasGesture: boolean) {
-    const audio = audioRef.current;
-    if (!audio || musicPlaying) return;
-    audio.play()
-      .then(() => { setMusicPlaying(true); setMusicNeedsGesture(false); })
-      .catch(() => {
-        // Browser blocked autoplay (no gesture). Pulse the toggle to invite one tap.
-        if (!hasGesture) setMusicNeedsGesture(true);
-      });
-  }
 
   function toggleMusic() {
     const audio = audioRef.current;
@@ -87,7 +90,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     <Ctx.Provider value={{
       lang, toggleLang,
       cart, addToCart, removeFromCart, updateQty, clearCart,
-      musicPlaying, musicNeedsGesture, toggleMusic, startMusic,
+      musicPlaying, musicNeedsGesture, toggleMusic,
     }}>
       {children}
     </Ctx.Provider>
