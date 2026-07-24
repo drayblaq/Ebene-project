@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react';
 import { Lang } from '@/lib/translations';
 import { Product } from '@/lib/products';
 
@@ -13,6 +13,8 @@ type AppCtx = {
   removeFromCart: (id: number) => void;
   updateQty: (id: number, size: string, delta: number) => void;
   clearCart: () => void;
+  musicPlaying: boolean;
+  toggleMusic: () => void;
 };
 
 const Ctx = createContext<AppCtx | null>(null);
@@ -20,6 +22,27 @@ const Ctx = createContext<AppCtx | null>(null);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>('fr');
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audio = new Audio('/audio/ebene-song.mp3');
+    audio.loop = true;
+    audio.volume = 0.45;
+    audioRef.current = audio;
+    return () => { audio.pause(); audio.src = ''; };
+  }, []);
+
+  function toggleMusic() {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (musicPlaying) {
+      audio.pause();
+      setMusicPlaying(false);
+    } else {
+      audio.play().then(() => setMusicPlaying(true)).catch(() => {});
+    }
+  }
 
   const toggleLang = () => setLang(l => l === 'fr' ? 'en' : 'fr');
 
@@ -43,7 +66,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
   const clearCart = () => setCart([]);
 
-  return <Ctx.Provider value={{ lang, toggleLang, cart, addToCart, removeFromCart, updateQty, clearCart }}>{children}</Ctx.Provider>;
+  return <Ctx.Provider value={{ lang, toggleLang, cart, addToCart, removeFromCart, updateQty, clearCart, musicPlaying, toggleMusic }}>{children}</Ctx.Provider>;
 }
 
 export function useApp() {

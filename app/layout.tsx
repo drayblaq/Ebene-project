@@ -4,6 +4,7 @@ import { AppProvider } from '@/context/AppContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SplashScreen from '@/components/SplashScreen';
+import MusicToggle from '@/components/MusicToggle';
 
 export const metadata: Metadata = {
   title: 'Ébène · Cotonou, Bénin',
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           {children}
           <Footer />
+          <MusicToggle />
         </AppProvider>
       </body>
     </html>

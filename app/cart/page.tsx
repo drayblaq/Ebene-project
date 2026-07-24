@@ -71,7 +71,7 @@ export default function Cart() {
                     <div style={{display:'flex',alignItems:'center',gap:0,border:'1.5px solid #000000'}}>
                       <button onClick={()=>updateQty(item.id,item.size,-1)} style={{width:32,height:32,background:'none',border:'none',cursor:'pointer',fontSize:18,fontWeight:700,color:'#000000',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Aoboshi One',sans-serif"}}>−</button>
                       <span style={{minWidth:28,textAlign:'center',fontSize:13,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",color:'#000000'}}>{item.qty}</span>
-                      <button onClick={()=>updateQty(item.id,item.size,+1)} style={{width:32,height:32,background:'none',border:'none',cursor:'pointer',fontSize:18,fontWeight:700,color:'#000000',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Aoboshi One',sans-serif'}}>+</button>
+                      <button onClick={()=>updateQty(item.id,item.size,+1)} style={{width:32,height:32,background:'none',border:'none',cursor:'pointer',fontSize:18,fontWeight:700,color:'#000000',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Aoboshi One',sans-serif"}}>+</button>
                     </div>
                     <button onClick={()=>removeFromCart(item.id)} style={{fontSize:11,letterSpacing:2,color:'#000000',background:'none',border:'none',cursor:'pointer',fontFamily:"'Aoboshi One',sans-serif",textTransform:'uppercase',fontWeight:700,padding:0}}>{T.remove}</button>
                   </div>
