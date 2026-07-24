@@ -33,13 +33,23 @@ export function AppProvider({ children }: { children: ReactNode }) {
     audio.volume = 0.38;
     audioRef.current = audio;
 
-    // Muted autoplay is allowed by all browsers (no gesture required).
-    // Unmute immediately after playback starts → music plays automatically.
+    // Start muted — all browsers allow muted autoplay with no gesture.
+    // Audio is buffering/playing silently from the very first frame.
     audio.muted = true;
     audio.play()
-      .then(() => { audio.muted = false; setMusicPlaying(true); })
+      .then(() => {
+        setMusicPlaying(true);
+        // Try programmatic unmute immediately (works on desktop Chrome/Firefox).
+        audio.muted = false;
+        // Belt-and-suspenders: some browsers (Chrome Android, Safari) require
+        // a real gesture to unmute. Attach a one-time listener so the FIRST
+        // tap/click anywhere — including on the splash screen — unmutes instantly.
+        const unmute = () => { audio.muted = false; };
+        document.addEventListener('click',      unmute, { once: true, capture: true });
+        document.addEventListener('touchstart', unmute, { once: true, capture: true });
+      })
       .catch(() => {
-        // Extremely rare fallback — wait for first interaction.
+        // play() itself was blocked (rare). Unlock fully on first interaction.
         setMusicNeedsGesture(true);
         const unlock = () => {
           audio.muted = false;
@@ -47,9 +57,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
             .then(() => { setMusicPlaying(true); setMusicNeedsGesture(false); })
             .catch(() => {});
         };
-        document.addEventListener('click',      unlock, { once: true });
-        document.addEventListener('touchstart', unlock, { once: true });
-        document.addEventListener('keydown',    unlock, { once: true });
+        document.addEventListener('click',      unlock, { once: true, capture: true });
+        document.addEventListener('touchstart', unlock, { once: true, capture: true });
       });
 
     return () => { audio.pause(); audio.src = ''; };
