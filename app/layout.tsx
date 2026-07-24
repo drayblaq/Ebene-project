@@ -3,7 +3,6 @@ import './globals.css';
 import { AppProvider } from '@/context/AppContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import Cursor from '@/components/Cursor';
 import SplashScreen from '@/components/SplashScreen';
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <AppProvider>
           <SplashScreen />
-          <Cursor />
           <Navbar />
           {children}
           <Footer />

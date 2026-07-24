@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { tr } from '@/lib/translations';
 import { products } from '@/lib/products';
@@ -14,6 +14,24 @@ export default function Home() {
   const T = tr[lang];
   const router = useRouter();
   const offsets = [0, 36, 18, 52];
+
+  // Countdown to August 24 2026
+  const LAUNCH = new Date('2026-08-24T00:00:00');
+  const [timeLeft, setTimeLeft] = useState({ d:0, h:0, m:0, s:0 });
+  useEffect(() => {
+    const tick = () => {
+      const diff = Math.max(0, LAUNCH.getTime() - Date.now());
+      setTimeLeft({
+        d: Math.floor(diff / 86400000),
+        h: Math.floor((diff % 86400000) / 3600000),
+        m: Math.floor((diff % 3600000) / 60000),
+        s: Math.floor((diff % 60000) / 1000),
+      });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.08 });
@@ -34,7 +52,7 @@ export default function Home() {
           </div>
           <div style={{display:'flex',gap:20,alignItems:'center',flexWrap:'wrap'}}>
             <button onClick={()=>router.push('/collection')} className="btn-ol btn-ol-lt">{T.heroCta} →</button>
-            <span style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#000000',fontWeight:700,cursor:'pointer',fontFamily:"'Aoboshi One',sans-serif"}}>{T.heroStory}</span>
+            <button onClick={()=>document.getElementById('story')?.scrollIntoView({behavior:'smooth'})} style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#000000',fontWeight:700,cursor:'pointer',background:'none',border:'none',padding:0,fontFamily:"'Aoboshi One',sans-serif"}}>{T.heroStory}</button>
           </div>
         </div>
         <div className="sec-hero-img" style={{position:'relative',overflow:'hidden'}}>
@@ -77,26 +95,39 @@ export default function Home() {
       </section>
 
       {/* STORY */}
-      <section className="sec-story" style={{background:'#000000',padding:'140px 80px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:100,alignItems:'center'}}>
+      <section id="story" className="sec-story" style={{background:'#000000',padding:'140px 80px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:100,alignItems:'center'}}>
         <div className="fade-in">
           <p style={{fontSize:12,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 32px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.storySection}</p>
           <h2 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(38px,3.8vw,60px)',color:'#FFFFFF',margin:'0 0 36px',lineHeight:1.1}}>{T.storyTitleLine1}<br/><em>{T.storyTitleLine2}</em></h2>
           <p style={{color:'#FFFFFF',fontSize:16,lineHeight:1.95,fontWeight:400,margin:'0 0 22px',maxWidth:440,textWrap:'pretty',fontFamily:"'Aoboshi One',sans-serif"} as React.CSSProperties}>{T.storyP1}</p>
-          <p style={{color:'#FFFFFF',fontSize:16,lineHeight:1.95,fontWeight:400,margin:'0 0 52px',maxWidth:440,textWrap:'pretty',fontFamily:"'Aoboshi One',sans-serif"} as React.CSSProperties}>{T.storyP2}</p>
-          <button onClick={()=>router.push('/contact')} className="btn-ol btn-ol-dk">{T.meetUs} →</button>
+          <p style={{color:'#FFFFFF',fontSize:16,lineHeight:1.95,fontWeight:400,margin:'0 0 0',maxWidth:440,textWrap:'pretty',fontFamily:"'Aoboshi One',sans-serif"} as React.CSSProperties}>{T.storyP2}</p>
         </div>
         <div className="fade-in d2 sec-story-img" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
           <div style={{position:'relative',width:'100%',display:'flex',justifyContent:'center',paddingBottom:60}}>
             <Image src="/images/cloth1.png" alt="" width={240} height={320} style={{width:'55%',maxWidth:240,filter:'drop-shadow(0 24px 64px rgba(0,0,0,0.6))',zIndex:2,position:'relative',objectFit:'contain'}} />
             <Image src="/images/tag.png" alt="" width={165} height={220} className="animate-tag-swing" style={{width:'38%',maxWidth:165,position:'absolute',bottom:-30,right:'8%',filter:'drop-shadow(0 16px 40px rgba(0,0,0,0.5)) invert(1)',transform:'rotate(10deg)',zIndex:1,objectFit:'contain'}} />
           </div>
-          <div style={{display:'flex',gap:52,paddingTop:32,borderTop:'1px solid rgba(255,255,255,0.08)',width:'100%',justifyContent:'center'}}>
-            {[{n:'24',l:T.pieces},{n:'3',l:T.matieres},{n:'1',l:T.vision}].map(s=>(
-              <div key={s.n} style={{textAlign:'center'}}>
-                <p style={{fontFamily:"'Joti One',cursive",fontSize:44,color:'#814D2D',margin:0,lineHeight:1}}>{s.n}</p>
-                <p style={{fontSize:11,letterSpacing:4,textTransform:'uppercase',color:'#FFFFFF',margin:'10px 0 0',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{s.l}</p>
-              </div>
-            ))}
+          {/* Countdown to launch */}
+          <div style={{width:'100%',paddingTop:32,borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+            <p style={{fontSize:10,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 20px',fontWeight:700,textAlign:'center',fontFamily:"'Aoboshi One',sans-serif"}}>
+              {lang==='fr'?'Disponible dans':'Available in'}
+            </p>
+            <div style={{display:'flex',gap:0,justifyContent:'center'}}>
+              {[
+                {n:String(timeLeft.d).padStart(2,'0'), l:lang==='fr'?'Jours':'Days'},
+                {n:String(timeLeft.h).padStart(2,'0'), l:lang==='fr'?'Heures':'Hours'},
+                {n:String(timeLeft.m).padStart(2,'0'), l:lang==='fr'?'Min':'Min'},
+                {n:String(timeLeft.s).padStart(2,'0'), l:lang==='fr'?'Sec':'Sec'},
+              ].map((u,i)=>(
+                <div key={u.l} style={{display:'flex',alignItems:'stretch'}}>
+                  <div style={{textAlign:'center',padding:'0 20px'}}>
+                    <p style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(32px,4vw,52px)',color:'#814D2D',margin:0,lineHeight:1,minWidth:60}}>{u.n}</p>
+                    <p style={{fontSize:10,letterSpacing:3,textTransform:'uppercase',color:'#FFFFFF',margin:'8px 0 0',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{u.l}</p>
+                  </div>
+                  {i<3 && <span style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(28px,3.5vw,44px)',color:'#814D2D',alignSelf:'flex-start',paddingTop:2,opacity:0.6}}>:</span>}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
