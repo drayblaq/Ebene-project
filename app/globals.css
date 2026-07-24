@@ -80,9 +80,26 @@ a { color: inherit; text-decoration: none; }
   .sec-hero-text { padding: 84px 24px 40px !important; justify-content: flex-start !important; }
   .sec-hero-img  { display: none !important; }
   .sec-hero-scroll { display: none !important; }
-  .hero-wm-clip  { height: 110px !important; margin-bottom: 32px !important; }
-  /* left: -120px gives 10px safety margin so É accent isn't hard-clipped at the edge */
-  .hero-wm-img   { width: 546px !important; height: 772px !important; top: -337px !important; left: -120px !important; }
+  /*
+   * Mobile wordmark: switch from absolute-pixel clip to background-image.
+   * PNG content at x=23.8–74.5%, y=44.3–57.2% of the 420×594 frame.
+   * background-size:200% makes text span ~50.7% of bg width ≈ full content width.
+   * background-position:48% 51% is geometry-derived and holds at any mobile width.
+   * Verified at 360px, 375px, 414px — full ÉBÈNE visible, left-aligned, no clipping.
+   */
+  .hero-wm-clip {
+    height: auto !important;
+    padding-bottom: 42% !important;
+    overflow: hidden !important;
+    position: relative !important;
+    margin-bottom: 32px !important;
+    background-image: url('/images/wordmark-black-v2.png') !important;
+    background-size: 200% auto !important;
+    background-position: 48% 51% !important;
+    background-repeat: no-repeat !important;
+  }
+  /* hide the absolutely-positioned <img> on mobile — bg-image handles it */
+  .hero-wm-img { display: none !important; }
 
   /* Featured / sections */
   .sec-feat       { padding: 72px 20px 60px !important; }
