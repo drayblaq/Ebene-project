@@ -41,12 +41,28 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
     const onDown = (e: MouseEvent) => { dragging=true; lastX=e.clientX; didDragRef.current=false; sc.style.cursor='grabbing'; e.preventDefault(); };
     const onGlobalMove = (e: MouseEvent) => { if(!dragging) return; const dx=e.clientX-lastX; if(Math.abs(dx)>4) didDragRef.current=true; rotY+=dx*0.9; lastX=e.clientX; card.style.transition='none'; card.style.transform=`rotateY(${rotY}deg)`; };
     const onUp = () => { if(!dragging) return; dragging=false; sc.style.cursor='grab'; rotY=Math.round(rotY/180)*180; card.style.transition='transform 0.5s cubic-bezier(0.23,1,0.32,1)'; card.style.transform=`rotateY(${rotY}deg)`; };
+    // Touch support for mobile flip
+    const onTouchStart = (e: TouchEvent) => { dragging=true; lastX=e.touches[0].clientX; didDragRef.current=false; };
+    const onTouchMove = (e: TouchEvent) => {
+      if (!dragging) return;
+      const dx = e.touches[0].clientX - lastX;
+      if (Math.abs(dx) > 4) didDragRef.current = true;
+      rotY += dx * 0.9; lastX = e.touches[0].clientX;
+      card.style.transition = 'none';
+      card.style.transform = `rotateY(${rotY}deg)`;
+      e.preventDefault();
+    };
+    const onTouchEnd = () => { if(!dragging) return; dragging=false; rotY=Math.round(rotY/180)*180; card.style.transition='transform 0.5s cubic-bezier(0.23,1,0.32,1)'; card.style.transform=`rotateY(${rotY}deg)`; };
+
     sc.addEventListener('mousemove',onMove);
     sc.addEventListener('mouseleave',onLeave);
     sc.addEventListener('mousedown',onDown);
     document.addEventListener('mousemove',onGlobalMove);
     document.addEventListener('mouseup',onUp);
-    return () => { sc.removeEventListener('mousemove',onMove); sc.removeEventListener('mouseleave',onLeave); sc.removeEventListener('mousedown',onDown); document.removeEventListener('mousemove',onGlobalMove); document.removeEventListener('mouseup',onUp); };
+    sc.addEventListener('touchstart',onTouchStart,{passive:true});
+    sc.addEventListener('touchmove',onTouchMove,{passive:false});
+    sc.addEventListener('touchend',onTouchEnd);
+    return () => { sc.removeEventListener('mousemove',onMove); sc.removeEventListener('mouseleave',onLeave); sc.removeEventListener('mousedown',onDown); document.removeEventListener('mousemove',onGlobalMove); document.removeEventListener('mouseup',onUp); sc.removeEventListener('touchstart',onTouchStart); sc.removeEventListener('touchmove',onTouchMove); sc.removeEventListener('touchend',onTouchEnd); };
   }, []);
 
   function handleCardClick() {

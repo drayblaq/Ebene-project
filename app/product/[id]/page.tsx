@@ -199,11 +199,11 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
           <Image src="/images/11.png" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
         </div>
       </div>
-      <div style={{padding:'36px 80px',textAlign:'center'}}>
+      <div className="lifestyle-caption" style={{padding:'36px 48px',textAlign:'center'}}>
         <p style={{fontSize:10,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 6px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
           {lang==='fr'?'POLO ÉBÈNE / PORTÉ':'ÉBÈNE POLO / WORN'}
         </p>
-        <p style={{fontSize:13,color:'rgba(255,255,255,0.5)',margin:0,fontFamily:"'Aoboshi One',sans-serif",fontWeight:400,letterSpacing:1}}>
+        <p style={{fontSize:13,color:'#FFFFFF',margin:0,fontFamily:"'Aoboshi One',sans-serif",fontWeight:400,letterSpacing:1}}>
           {lang==='fr'?'Cotonou, Bénin · 2026':'Cotonou, Benin · 2026'}
         </p>
       </div>

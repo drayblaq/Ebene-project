@@ -29,8 +29,7 @@ export default function Cart() {
     <section className="sec-cart" style={{minHeight:'100vh',background:'#FFFFFF',padding:'140px 80px 80px'}}>
       {cart.length === 0 ? (
         <div style={{textAlign:'center',padding:'80px 0',display:'flex',flexDirection:'column',alignItems:'center',gap:24}}>
-          <Image src="/images/logo+text.png" alt="" width={160} height={48} style={{opacity:0.15,objectFit:'contain'}} />
-          <h2 style={{fontFamily:"'Joti One',cursive",fontSize:52,margin:0}}>{T.cartEmpty}</h2>
+          <h2 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(36px,6vw,52px)',margin:0}}>{T.cartEmpty}</h2>
           <p style={{color:'#000000',fontWeight:400,fontSize:16,margin:0,fontFamily:"'Aoboshi One',sans-serif"}}>{T.cartEmptyDesc}</p>
           <Link href="/collection" className="btn-ol btn-ol-lt" style={{marginTop:12}}>{T.shopNow} →</Link>
         </div>
@@ -40,7 +39,7 @@ export default function Cart() {
           <div className="cart-grid" style={{display:'grid',gridTemplateColumns:'1fr 360px',gap:60,alignItems:'start'}}>
             <div>
               {cart.map(item=>(
-                <div key={item.id} style={{display:'flex',gap:24,padding:'28px 0',borderBottom:'1px solid rgba(0,0,0,0.08)',alignItems:'center'}}>
+                <div key={item.id} className="cart-item-row" style={{display:'flex',gap:20,padding:'28px 0',borderBottom:'1px solid rgba(0,0,0,0.08)',alignItems:'center',flexWrap:'wrap'}}>
                   <div style={{width:90,height:90,background:'#F5F5F5',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,overflow:'hidden'}}>
                     <CartItemImage item={item} lang={lang} />
                   </div>
