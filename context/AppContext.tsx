@@ -14,7 +14,9 @@ type AppCtx = {
   updateQty: (id: number, size: string, delta: number) => void;
   clearCart: () => void;
   musicPlaying: boolean;
+  musicNeedsGesture: boolean;
   toggleMusic: () => void;
+  startMusic: (hasGesture: boolean) => void;
 };
 
 const Ctx = createContext<AppCtx | null>(null);
@@ -23,19 +25,34 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [lang, setLang] = useState<Lang>('fr');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [musicPlaying, setMusicPlaying] = useState(false);
+  // true when autoplay was blocked and the toggle should pulse to invite a tap
+  const [musicNeedsGesture, setMusicNeedsGesture] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const audio = new Audio('/audio/ebene-song.mp3');
     audio.loop = true;
-    audio.volume = 0.45;
+    audio.volume = 0.38;
     audioRef.current = audio;
     return () => { audio.pause(); audio.src = ''; };
   }, []);
 
+  // Called by SplashScreen on dismiss. hasGesture=true when user tapped to skip.
+  function startMusic(hasGesture: boolean) {
+    const audio = audioRef.current;
+    if (!audio || musicPlaying) return;
+    audio.play()
+      .then(() => { setMusicPlaying(true); setMusicNeedsGesture(false); })
+      .catch(() => {
+        // Browser blocked autoplay (no gesture). Pulse the toggle to invite one tap.
+        if (!hasGesture) setMusicNeedsGesture(true);
+      });
+  }
+
   function toggleMusic() {
     const audio = audioRef.current;
     if (!audio) return;
+    setMusicNeedsGesture(false);
     if (musicPlaying) {
       audio.pause();
       setMusicPlaying(false);
@@ -66,7 +83,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
   const clearCart = () => setCart([]);
 
-  return <Ctx.Provider value={{ lang, toggleLang, cart, addToCart, removeFromCart, updateQty, clearCart, musicPlaying, toggleMusic }}>{children}</Ctx.Provider>;
+  return (
+    <Ctx.Provider value={{
+      lang, toggleLang,
+      cart, addToCart, removeFromCart, updateQty, clearCart,
+      musicPlaying, musicNeedsGesture, toggleMusic, startMusic,
+    }}>
+      {children}
+    </Ctx.Provider>
+  );
 }
 
 export function useApp() {

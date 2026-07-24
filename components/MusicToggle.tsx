@@ -3,38 +3,50 @@ import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 
 export default function MusicToggle() {
-  const { musicPlaying, toggleMusic } = useApp();
+  const { musicPlaying, toggleMusic, musicNeedsGesture } = useApp();
   const [hovered, setHovered] = useState(false);
 
-  const bg = hovered ? '#814D2D' : '#000000';
+  const bg = hovered ? '#814D2D' : musicNeedsGesture ? '#814D2D' : '#000000';
 
   return (
-    <button
-      onClick={toggleMusic}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      aria-label={musicPlaying ? 'Pause music' : 'Play music'}
-      style={{
-        position: 'fixed',
-        bottom: 'calc(28px + env(safe-area-inset-bottom))',
-        right: 28,
-        zIndex: 9000,
-        width: 48,
-        height: 48,
-        borderRadius: '50%',
-        background: bg,
-        border: 'none',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        transition: 'background 0.2s ease, transform 0.15s ease',
-        transform: hovered ? 'scale(1.08)' : 'scale(1)',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
-      }}
-    >
-      {musicPlaying ? <IconSpeakerOn /> : <IconSpeakerOff />}
-    </button>
+    <>
+      {musicNeedsGesture && (
+        <style>{`
+          @keyframes music-pulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 0 0 rgba(129,77,45,0.7); }
+            50%       { box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 0 0 10px rgba(129,77,45,0); }
+          }
+        `}</style>
+      )}
+      <button
+        onClick={toggleMusic}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        aria-label={musicPlaying ? 'Pause music' : 'Play music'}
+        style={{
+          position: 'fixed',
+          bottom: 'calc(28px + env(safe-area-inset-bottom))',
+          right: 28,
+          zIndex: 9000,
+          width: 48,
+          height: 48,
+          borderRadius: '50%',
+          background: bg,
+          border: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'background 0.2s ease, transform 0.15s ease',
+          transform: hovered ? 'scale(1.08)' : 'scale(1)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+          animation: musicNeedsGesture ? 'music-pulse 1.6s ease-in-out infinite' : 'none',
+          willChange: 'transform',
+        }}
+      >
+        {musicPlaying ? <IconSpeakerOn /> : <IconSpeakerOff />}
+      </button>
+    </>
   );
 }
 

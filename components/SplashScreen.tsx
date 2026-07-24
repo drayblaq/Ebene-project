@@ -1,32 +1,51 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { useApp } from '@/context/AppContext';
 
 /*
- * Timing:
- *   0 – 0.8s  : icon scales 0.85→1, opacity 0→1 (spring ease)
- *   0.8 – 3.1s: hold
- *   3.1 – 3.6s: outer div fades to opacity 0  (React-driven)
- * Tap/click at any point immediately triggers the fade-out.
+ * Timing (total = 5 s from first visible frame):
+ *   0.0 – 0.8 s  icon scales 0.85→1 + fades in (spring ease)
+ *   0.8 – 4.55 s hold
+ *   4.55 – 5.0 s outer div fades to opacity 0 (0.45 s ease-out)
+ *
+ * Tap at any point triggers fade immediately.
+ *
+ * Blank-flash fix: visible starts TRUE so the black overlay is present
+ * on the very first paint. useEffect then hides it immediately for
+ * returning visitors (sessionStorage key already set).
  */
 
 export default function SplashScreen() {
-  const [visible, setVisible] = useState(false);
+  // Start visible so the black overlay is present on the very first client paint —
+  // avoids the white flash that happens when useState(false) defers the overlay
+  // until after useEffect.
+  const [visible, setVisible] = useState(true);
   const [fading, setFading] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const dismissedRef = useRef(false);
+  const { startMusic } = useApp();
 
   useEffect(() => {
-    if (!sessionStorage.getItem('ebene-splash')) {
-      setVisible(true);
-      sessionStorage.setItem('ebene-splash', '1');
-      timerRef.current = setTimeout(dismiss, 3100);
+    // Returning visitor: hide before any animation plays
+    if (sessionStorage.getItem('ebene-splash')) {
+      setVisible(false);
+      return;
     }
+    sessionStorage.setItem('ebene-splash', '1');
+
+    // 4 550 ms hold → then 450 ms fade → total 5 000 ms
+    timerRef.current = setTimeout(() => triggerDismiss(false), 4550);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function dismiss() {
+  function triggerDismiss(byUserGesture: boolean) {
+    if (dismissedRef.current) return;
+    dismissedRef.current = true;
     if (timerRef.current) { clearTimeout(timerRef.current); timerRef.current = null; }
     setFading(true);
-    setTimeout(() => setVisible(false), 520);
+    startMusic(byUserGesture);
+    setTimeout(() => setVisible(false), 450);
   }
 
   if (!visible) return null;
@@ -40,7 +59,7 @@ export default function SplashScreen() {
         }
       `}</style>
       <div
-        onClick={dismiss}
+        onClick={() => triggerDismiss(true)}
         style={{
           position: 'fixed',
           inset: 0,
@@ -51,8 +70,9 @@ export default function SplashScreen() {
           justifyContent: 'center',
           cursor: 'pointer',
           opacity: fading ? 0 : 1,
-          transition: fading ? 'opacity 0.5s ease' : 'none',
+          transition: fading ? 'opacity 0.45s ease-out' : 'none',
           pointerEvents: fading ? 'none' : 'auto',
+          willChange: 'opacity',
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
