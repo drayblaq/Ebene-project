@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import LogoLockup from '@/components/LogoLockup';
 
 export default function SplashScreen() {
   const [visible, setVisible] = useState(false);
@@ -39,14 +39,7 @@ export default function SplashScreen() {
         pointerEvents: fading ? 'none' : 'auto',
       }}
     >
-      <Image
-        src="/images/logo.png"
-        alt="Ébène"
-        width={120}
-        height={120}
-        style={{ objectFit: 'contain' }}
-        priority
-      />
+      <LogoLockup iconHeight={80} dark />
     </div>
   );
 }

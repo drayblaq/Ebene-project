@@ -33,7 +33,7 @@ export const products: Product[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     dark: false,
     bg: '#FFFFFF',
-    image: '/images/cloth1.png',
+    image: '/images/polo.jpeg',
     imageBack: '/images/cloth2.png',
   },
 ];

@@ -1,7 +1,12 @@
 'use client';
-import Image from 'next/image';
-interface MarqueeItem { text?: string; accent?: boolean; image?: string; }
+interface MarqueeItem { text?: string; accent?: boolean; image?: string; invert?: boolean; }
 interface MarqueeProps { items: MarqueeItem[]; reverse?: boolean; bg?: string; }
+
+/*
+ * Icon PNG (420×594): emblem content at x=106-315, y=125-443 (209×318px).
+ * To show emblem at ~32px tall: scale = 32/318 = 0.1006 → img = 42×60px.
+ * We render the full PNG at that size; transparent frame means only the emblem shows.
+ */
 export default function Marquee({ items, reverse, bg='#000000' }: MarqueeProps) {
   const doubled = [...items,...items];
   const isBrown = bg === '#814D2D';
@@ -10,8 +15,9 @@ export default function Marquee({ items, reverse, bg='#000000' }: MarqueeProps) 
       <div className={reverse?'animate-marquee-rev':'animate-marquee'} style={{display:'flex',whiteSpace:'nowrap',width:'max-content',alignItems:'center'}}>
         {doubled.map((item,i)=>(
           item.image ? (
-            <span key={i} style={{padding:'0 40px',display:'inline-flex',alignItems:'center'}}>
-              <Image src={item.image} alt="" width={28} height={28} style={{objectFit:'contain',height:28,width:'auto'}} />
+            <span key={i} style={{padding:'0 32px',display:'inline-flex',alignItems:'center'}}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={item.image} alt="" style={{height:60,width:'auto',display:'block',filter:item.invert?'invert(1)':undefined}} />
             </span>
           ) : item.accent ? (
             <span key={i} style={{fontSize:10,letterSpacing:6,color:isBrown?'rgba(255,255,255,0.8)':'#814D2D',textTransform:'uppercase',padding:'0 32px',display:'inline-flex',alignItems:'center',fontWeight:500}}>

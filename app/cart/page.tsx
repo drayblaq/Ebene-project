@@ -23,7 +23,7 @@ export default function Cart() {
   const T = tr[lang];
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const waItems = cart.map(i=>`${lang==='fr'?i.name:i.nameEn} x${i.qty}`).join(', ');
-  const waLink = `https://wa.me/22900000000?text=${encodeURIComponent(`Bonjour Ébène! Je veux précommander: ${waItems}. Cotonou, Bénin.`)}`;
+  const waLink = `https://instagram.com`;
 
   return (
     <section className="sec-cart" style={{minHeight:'100vh',background:'#FFFFFF',padding:'140px 80px 80px'}}>

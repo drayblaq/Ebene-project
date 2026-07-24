@@ -50,9 +50,8 @@ export default function Navbar() {
           )}
         </button>
 
-        {/* Logo — wordmark on light/transparent background */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
-          <Image src="/images/logo+text.png" alt="Ébène" width={110} height={34} style={{ objectFit: 'contain', height: 28, width: 'auto' }} priority />
+          <Image src="/images/icon-black-v2.png" alt="Ébène" width={34} height={48} style={{ height: 48, width: 'auto', objectFit: 'contain', display: 'block' }} priority />
         </Link>
 
         {/* Desktop right links */}

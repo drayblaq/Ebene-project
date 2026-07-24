@@ -50,12 +50,12 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
         {/* LEFT — product image */}
         <div className="product-img-col" style={{background:p.bg,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',position:'sticky',top:100,height:'calc(100vh - 100px)',overflow:'hidden',border:'1px solid rgba(0,0,0,0.06)',gap:20}}>
-          <div style={{position:'relative',width:'80%',maxWidth:400,aspectRatio:'3/4',display:'flex',alignItems:'center',justifyContent:'center'}}>
+          <div style={{position:'relative',width:'85%',maxWidth:460,aspectRatio:'4/5'}}>
             <Image
               src={showBack && p.imageBack ? p.imageBack : p.image}
               alt={name}
               fill
-              style={{objectFit:'contain'}}
+              style={{objectFit:'contain',objectPosition:'center center'}}
               priority
             />
           </div>
@@ -160,56 +160,29 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             </button>
 
             {!isSO && (
-              <div style={{display:'flex',gap:10}}>
-                <a
-                  href={`https://wa.me/22900000000?text=${waText}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    flex:1,
-                    display:'block',
-                    padding:'16px 16px',
-                    background:'transparent',
-                    color:'#000000',
-                    border:'1.5px solid #000000',
-                    fontSize:11,
-                    letterSpacing:2,
-                    textTransform:'uppercase',
-                    fontFamily:"'Aoboshi One',sans-serif",
-                    fontWeight:700,
-                    cursor:'pointer',
-                    textAlign:'center',
-                    textDecoration:'none',
-                    boxSizing:'border-box',
-                  }}
-                >
-                  WhatsApp →
-                </a>
-                <a
-                  href="https://instagram.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    flex:1,
-                    display:'block',
-                    padding:'16px 16px',
-                    background:'transparent',
-                    color:'#814D2D',
-                    border:'1.5px solid #814D2D',
-                    fontSize:11,
-                    letterSpacing:2,
-                    textTransform:'uppercase',
-                    fontFamily:"'Aoboshi One',sans-serif",
-                    fontWeight:700,
-                    cursor:'pointer',
-                    textAlign:'center',
-                    textDecoration:'none',
-                    boxSizing:'border-box',
-                  }}
-                >
-                  Instagram →
-                </a>
-              </div>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  display:'block',
+                  width:'100%',
+                  padding:'16px 24px',
+                  background:'transparent',
+                  color:'#814D2D',
+                  border:'1.5px solid #814D2D',
+                  fontSize:11,
+                  letterSpacing:3,
+                  textTransform:'uppercase',
+                  fontFamily:"'Aoboshi One',sans-serif",
+                  fontWeight:700,
+                  textAlign:'center',
+                  textDecoration:'none',
+                  boxSizing:'border-box',
+                }}
+              >
+                Instagram →
+              </a>
             )}
           </div>
 

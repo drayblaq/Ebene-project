@@ -8,6 +8,7 @@ import { products } from '@/lib/products';
 import Marquee from '@/components/Marquee';
 import ProductCard from '@/components/ProductCard';
 
+
 export default function Home() {
   const { lang, addToCart } = useApp();
   const T = tr[lang];
@@ -24,17 +25,21 @@ export default function Home() {
     <>
       {/* HERO */}
       <section className="sec-hero" style={{height:'100vh',background:'#FFFFFF',display:'grid',gridTemplateColumns:'1fr 1fr',position:'relative',overflow:'hidden'}}>
-        <div className="sec-hero-text" style={{display:'flex',flexDirection:'column',justifyContent:'center',padding:'0 56px 0 80px',position:'relative',zIndex:2,gap:0}}>
-          <p style={{fontSize:11,letterSpacing:6,textTransform:'uppercase',color:'#814D2D',margin:'0 0 22px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.heroSub}</p>
-          <Image src="/images/logo+text.png" alt="Ébène" width={640} height={160} style={{maxWidth:'min(560px,95%)',height:'auto',objectFit:'contain',marginBottom:36}} priority />
+        <div className="sec-hero-text" style={{display:'flex',flexDirection:'column',justifyContent:'center',padding:'90px 56px 60px 80px',position:'relative',zIndex:2}}>
+          <p style={{fontSize:11,letterSpacing:6,textTransform:'uppercase',color:'#814D2D',margin:'0 0 28px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.heroSub}</p>
+          {/* Wordmark: precise clip based on PNG bounding box x=100-313, y=263-340 in 420×594 */}
+          <div className="hero-wm-clip">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/wordmark-black-v2.png" alt="Ébène" className="hero-wm-img" />
+          </div>
           <div style={{display:'flex',gap:20,alignItems:'center',flexWrap:'wrap'}}>
             <button onClick={()=>router.push('/collection')} className="btn-ol btn-ol-lt">{T.heroCta} →</button>
             <span style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#000000',fontWeight:700,cursor:'pointer',fontFamily:"'Aoboshi One',sans-serif"}}>{T.heroStory}</span>
           </div>
         </div>
-        <div className="sec-hero-img" style={{position:'relative',height:'100vh',overflow:'hidden'}}>
+        <div className="sec-hero-img" style={{position:'relative',overflow:'hidden'}}>
           <Image src="/images/8.png" alt="Ébène" fill className="animate-float" style={{objectFit:'cover',objectPosition:'center top'}} priority />
-          <div style={{position:'absolute',inset:0,background:'linear-gradient(to right,rgba(255,255,255,0.08),transparent)',pointerEvents:'none',zIndex:1}}/>
+          <div style={{position:'absolute',inset:0,background:'linear-gradient(to right,rgba(255,255,255,0.12),transparent)',pointerEvents:'none',zIndex:1}}/>
           <div style={{position:'absolute',bottom:40,right:40,width:88,height:88,zIndex:2}} className="animate-spin-text">
             <svg viewBox="0 0 100 100" width="88" height="88">
               <defs><path id="cp" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"/></defs>
@@ -52,7 +57,7 @@ export default function Home() {
       <Marquee items={[
         {text:'Ébène'},{text:T.nouvelleCollection,accent:true},
         {text:'Ébène'},{text:'Cotonou, Bénin',accent:true},
-        {text:'Ébène'},{image:'/images/logo.png'},
+        {text:'Ébène'},{image:'/images/icon-black-v2.png',invert:true},
       ]} />
 
       {/* FEATURED PRODUCTS */}

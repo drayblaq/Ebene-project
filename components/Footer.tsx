@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="footer-root" style={{background:'#000000',padding:'56px 80px',borderTop:'1px solid rgba(255,255,255,0.05)'}}>
       <div className="footer-top" style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:52,flexWrap:'wrap',gap:24}}>
         <Link href="/" style={{display:'flex',alignItems:'center'}}>
-          <Image src="/images/logo+text1.png" alt="Ébène" width={110} height={34} style={{objectFit:'contain',height:28,width:'auto'}} />
+          <Image src="/images/logo+text1.png" alt="Ébène" width={180} height={52} style={{height:52,width:'auto',objectFit:'contain'}} />
         </Link>
         <div style={{display:'flex',gap:36}}>
           {['Instagram','TikTok'].map(s=>(

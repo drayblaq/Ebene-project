@@ -16,7 +16,6 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
   const bmu = d ? '#000000' : '#FFFFFF';
   const name = lang==='fr'?p.name:p.nameEn, mat = lang==='fr'?p.mat:p.matEn;
   const desc = lang==='fr'?p.desc:p.descEn;
-  const waText = encodeURIComponent(`Bonjour Ébène! Je veux précommander: ${name}, Cotonou, Bénin`);
   const badge = lang === 'fr' ? p.badge : (p.badgeEn ?? p.badge);
   const badgeBg = p.badge==='NEW'?'#000000':p.badge==='SOLD OUT'?'#666':'#814D2D';
   const [imgErr, setImgErr] = useState(false);
@@ -66,13 +65,15 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
             <div style={{width:13,height:13,borderRadius:'50%',border:`1.5px solid ${d?'rgba(255,255,255,0.15)':'rgba(0,0,0,0.15)'}`,marginBottom:12,background:d?'rgba(255,255,255,0.04)':'rgba(0,0,0,0.03)'}} />
             <span style={{fontSize:10,letterSpacing:4,textTransform:'uppercase',color:mu,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.nouvelleCollection.toUpperCase()}</span>
           </div>
-          <div style={{height:260,background:p.bg,display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden',position:'relative',border:d?'none':'1px solid rgba(0,0,0,0.06)'}}>
+          <div style={{height:300,background:p.bg,display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden',position:'relative',border:d?'none':'1px solid rgba(0,0,0,0.06)'}}>
             {showFallback ? (
               <div style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center',padding:'0 16px',opacity:isSO?0.3:1}}>
                 <span style={{fontFamily:"'Joti One',cursive",fontSize:15,textAlign:'center',lineHeight:1.3,color:d?'rgba(255,255,255,0.5)':'rgba(0,0,0,0.25)',fontStyle:'italic'}}>{name}</span>
               </div>
             ) : (
-              <Image src={p.image} alt={name} width={240} height={240} onError={()=>setImgErr(true)} style={{objectFit:'contain',mixBlendMode:d?'normal':'multiply',opacity:isSO?0.3:1,filter:isSO?'grayscale(100%)':'none'}} />
+              <div style={{position:'relative',width:'100%',height:'100%'}}>
+                <Image src={p.image} alt={name} fill onError={()=>setImgErr(true)} style={{objectFit:'contain',objectPosition:'center center',opacity:isSO?0.3:1,filter:isSO?'grayscale(100%)':'none'}} />
+              </div>
             )}
             {badge && <div style={{position:'absolute',bottom:10,right:10,background:badgeBg,color:'#FFFFFF',fontSize:9,letterSpacing:2,padding:'4px 10px',borderRadius:20,textTransform:'uppercase',fontWeight:600}}>{badge}</div>}
           </div>
@@ -106,11 +107,7 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:8}}>
             <button onClick={e=>{e.stopPropagation();onAdd(p);}} style={{display:'block',width:'100%',background:d?'#000000':'#814D2D',color:'#FFFFFF',border:'none',padding:12,fontSize:11,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",cursor:'pointer',fontWeight:600}}>{T.addToCart}</button>
-            <div style={{display:'flex',gap:0,justifyContent:'center'}}>
-              <a href={`https://wa.me/22900000000?text=${waText}`} onClick={e=>e.stopPropagation()} target="_blank" rel="noreferrer" style={{fontSize:10,letterSpacing:2,color:bmu,textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",textDecoration:'none'}}>WhatsApp</a>
-              <span style={{fontSize:10,color:bmu,fontWeight:700,padding:'0 8px'}}>·</span>
-              <a href="https://instagram.com" onClick={e=>e.stopPropagation()} target="_blank" rel="noreferrer" style={{fontSize:10,letterSpacing:2,color:bmu,textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",textDecoration:'none'}}>Instagram</a>
-            </div>
+            <a href="https://instagram.com" onClick={e=>e.stopPropagation()} target="_blank" rel="noreferrer" style={{display:'block',textAlign:'center',fontSize:10,letterSpacing:2,color:bmu,textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",textDecoration:'none'}}>Instagram →</a>
           </div>
         </div>
       </div>
