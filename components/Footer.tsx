@@ -14,7 +14,7 @@ export default function Footer() {
           <Image src="/images/logo+text1.png" alt="Ébène" width={130} height={38} style={{height:38,width:'auto',objectFit:'contain'}} />
         </Link>
         <div style={{display:'flex',gap:36}}>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer" className="nav-lnk" style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#FFFFFF',fontWeight:700}}>Instagram</a>
+          <a href="https://www.instagram.com/vinanblo_?igsh=MWx4enNodDBpMjIwZw%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" className="nav-lnk" style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#FFFFFF',fontWeight:700}}>Instagram</a>
         </div>
       </div>
       <div className="footer-bottom" style={{paddingTop:28,borderTop:'1px solid rgba(255,255,255,0.05)',textAlign:'center'}}>

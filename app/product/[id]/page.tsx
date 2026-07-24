@@ -161,7 +161,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
             {!isSO && (
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/vinanblo_?igsh=MWx4enNodDBpMjIwZw%3D%3D&utm_source=qr"
                 target="_blank"
                 rel="noreferrer"
                 style={{

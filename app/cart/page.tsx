@@ -22,8 +22,19 @@ export default function Cart() {
   const { lang, cart, removeFromCart } = useApp();
   const T = tr[lang];
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const waItems = cart.map(i=>`${lang==='fr'?i.name:i.nameEn} x${i.qty}`).join(', ');
-  const waLink = `https://instagram.com`;
+  const IG_USER = 'vinanblo_';
+  const IG_PROFILE = `https://www.instagram.com/${IG_USER}?igsh=MWx4enNodDBpMjIwZw%3D%3D&utm_source=qr`;
+  const IG_DM = `https://ig.me/m/${IG_USER}`;
+
+  const orderText = cart.map(i=>`• ${lang==='fr'?i.name:i.nameEn} — Taille ${i.size} x${i.qty}`).join('\n');
+  const fullMessage = lang==='fr'
+    ? `Bonjour Ébène ! Je voudrais précommander :\n${orderText}\n\nMerci`
+    : `Hello Ébène! I'd like to pre-order:\n${orderText}\n\nThank you`;
+
+  function handleOrder() {
+    try { navigator.clipboard.writeText(fullMessage); } catch {}
+    window.open(IG_DM, '_blank');
+  }
 
   return (
     <section className="sec-cart" style={{minHeight:'100vh',background:'#FFFFFF',padding:'140px 80px 80px'}}>
@@ -65,8 +76,8 @@ export default function Cart() {
                 <span style={{fontSize:13,color:'#FFFFFF',fontWeight:700,letterSpacing:1,fontFamily:"'Aoboshi One',sans-serif"}}>Total</span>
                 <span style={{fontFamily:"'Joti One',cursive",fontSize:28,color:'#814D2D'}}>{formatFCFA(total)}</span>
               </div>
-              <a href={waLink} target="_blank" rel="noreferrer" style={{display:'block',background:'#814D2D',color:'#FFFFFF',textAlign:'center',padding:16,fontSize:12,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700,marginBottom:12}}>{T.orderWhatsApp} →</a>
-              <p style={{fontSize:11,color:'#FFFFFF',textAlign:'center',margin:0,fontWeight:700,letterSpacing:1,fontFamily:"'Aoboshi One',sans-serif"}}>{T.orPayOnline}</p>
+              <button onClick={handleOrder} style={{display:'block',width:'100%',background:'#814D2D',color:'#FFFFFF',textAlign:'center',padding:16,fontSize:12,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700,marginBottom:12,border:'none',cursor:'pointer'}}>{T.orderWhatsApp} →</button>
+              <p style={{fontSize:11,color:'#FFFFFF',textAlign:'center',margin:0,fontWeight:700,letterSpacing:1,fontFamily:"'Aoboshi One',sans-serif"}}>{lang==='fr'?'Votre commande sera copiée dans le presse-papiers':'Your order will be copied to clipboard'}</p>
             </div>
           </div>
         </>
