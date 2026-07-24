@@ -110,8 +110,7 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
         {/* BACK */}
         <div className="card-face card-back" style={{background:bbg,display:'flex',flexDirection:'column',justifyContent:'space-between',padding:24,gap:10}}>
           <div>
-            <p style={{fontSize:10,letterSpacing:4,textTransform:'uppercase',color:bmu,margin:0,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{getCatLabel(p.cat,lang)}</p>
-            <h3 style={{fontFamily:"'Joti One',cursive",fontSize:22,color:bfg,margin:'4px 0 8px',lineHeight:1.1,fontWeight:400}}>{name}</h3>
+            <h3 style={{fontFamily:"'Joti One',cursive",fontSize:22,color:bfg,margin:'0 0 8px',lineHeight:1.1,fontWeight:400}}>{name}</h3>
             <p style={{fontSize:13,color:bmu,lineHeight:1.75,margin:0,fontWeight:400,fontFamily:"'Aoboshi One',sans-serif"}}>{desc}</p>
           </div>
           <div>

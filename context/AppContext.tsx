@@ -11,6 +11,7 @@ type AppCtx = {
   cart: CartItem[];
   addToCart: (p: Product, size?: string) => void;
   removeFromCart: (id: number) => void;
+  clearCart: () => void;
 };
 
 const Ctx = createContext<AppCtx | null>(null);
@@ -32,8 +33,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   const removeFromCart = (id: number) => setCart(c => c.filter(x => x.id !== id));
+  const clearCart = () => setCart([]);
 
-  return <Ctx.Provider value={{ lang, toggleLang, cart, addToCart, removeFromCart }}>{children}</Ctx.Provider>;
+  return <Ctx.Provider value={{ lang, toggleLang, cart, addToCart, removeFromCart, clearCart }}>{children}</Ctx.Provider>;
 }
 
 export function useApp() {

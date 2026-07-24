@@ -85,24 +85,15 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             ← {T.backToCollection}
           </Link>
 
-          <p style={{fontSize:11,letterSpacing:4,textTransform:'uppercase',color:'#814D2D',fontWeight:700,margin:'0 0 16px',fontFamily:"'Aoboshi One',sans-serif"}}>
-            {getCatLabel(p.cat, lang)}
-          </p>
-
-          <h1 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(36px,4vw,60px)',fontWeight:400,margin:'0 0 24px',lineHeight:1.05,color:'#000000'}}>
+          <h1 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(36px,4vw,60px)',fontWeight:400,margin:'0 0 16px',lineHeight:1.05,color:'#000000'}}>
             {name}
           </h1>
 
           <p style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(18px,2vw,26px)',color:'#814D2D',margin:'0 0 32px',fontWeight:400,letterSpacing:1}}>
-            {p.price === 0 ? T.priceTbd : formatFCFA(p.price)}
+            {lang==='fr'?'Le Polo Terracotta':'The Terracotta Polo'}
           </p>
 
           <div style={{width:48,height:1.5,background:'#000000',marginBottom:32}} />
-
-          <div style={{marginBottom:24}}>
-            <p style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#000000',fontWeight:700,margin:'0 0 6px',fontFamily:"'Aoboshi One',sans-serif"}}>{T.material}</p>
-            <p style={{fontSize:16,fontWeight:400,color:'#000000',margin:0,fontFamily:"'Aoboshi One',sans-serif"}}>{mat}</p>
-          </div>
 
           <div style={{marginBottom:40}}>
             <p style={{fontSize:15,fontWeight:400,color:'#000000',lineHeight:1.85,margin:0,maxWidth:380,fontFamily:"'Aoboshi One',sans-serif"}}>{desc}</p>
@@ -159,31 +150,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
               {isSO ? T.soldOut : added ? (lang === 'fr' ? 'Ajouté ✓' : 'Added ✓') : `${T.addToCart} · ${selectedSize}`}
             </button>
 
-            {!isSO && (
-              <a
-                href="https://www.instagram.com/vinanblo_?igsh=MWx4enNodDBpMjIwZw%3D%3D&utm_source=qr"
-                target="_blank"
-                rel="noreferrer"
-                style={{
-                  display:'block',
-                  width:'100%',
-                  padding:'16px 24px',
-                  background:'transparent',
-                  color:'#814D2D',
-                  border:'1.5px solid #814D2D',
-                  fontSize:11,
-                  letterSpacing:3,
-                  textTransform:'uppercase',
-                  fontFamily:"'Aoboshi One',sans-serif",
-                  fontWeight:700,
-                  textAlign:'center',
-                  textDecoration:'none',
-                  boxSizing:'border-box',
-                }}
-              >
-                Instagram →
-              </a>
-            )}
           </div>
 
         </div>

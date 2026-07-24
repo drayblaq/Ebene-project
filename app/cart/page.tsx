@@ -19,14 +19,14 @@ function CartItemImage({ item, lang }: { item: CartItem; lang: 'fr' | 'en' }) {
 }
 
 export default function Cart() {
-  const { lang, cart, removeFromCart } = useApp();
+  const { lang, cart, removeFromCart, clearCart } = useApp();
   const T = tr[lang];
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const IG_USER = 'vinanblo_';
   const IG_DM = `https://ig.me/m/${IG_USER}`;
   const [copied, setCopied] = useState(false);
 
-  const orderText = cart.map(i=>`• ${lang==='fr'?i.name:i.nameEn} — Taille ${i.size} x${i.qty}`).join('\n');
+  const orderText = cart.map(i=>`• ${lang==='fr'?i.name:i.nameEn} Taille ${i.size} x${i.qty}`).join('\n');
   const fullMessage = lang==='fr'
     ? `Bonjour Ébène ! Je voudrais précommander :\n${orderText}\n\nMerci`
     : `Hello Ébène! I'd like to pre-order:\n${orderText}\n\nThank you`;
@@ -40,6 +40,7 @@ export default function Cart() {
   function handleOrder() {
     try { navigator.clipboard.writeText(fullMessage); } catch {}
     window.open(IG_DM, '_blank');
+    clearCart();
   }
 
   return (
