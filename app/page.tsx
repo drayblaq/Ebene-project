@@ -69,7 +69,6 @@ export default function Home() {
           </div>
           <button onClick={()=>router.push('/collection')} className="btn-ol btn-ol-lt">{T.seeAll} →</button>
         </div>
-        <p style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#000000',fontWeight:700,textAlign:'center',marginBottom:48,fontFamily:"'Aoboshi One',sans-serif"}}>{T.rotateHint}</p>
         <div className="feat-scroll" style={{display:'flex',gap:36,overflowX:'auto',paddingBottom:24,alignItems:'flex-start',scrollbarWidth:'none',WebkitOverflowScrolling:'touch'} as React.CSSProperties}>
           {products.slice(0,4).map((p,i)=>(
             <ProductCard key={p.id} product={p} lang={lang} onAdd={addToCart} offsetTop={offsets[i%4]} />

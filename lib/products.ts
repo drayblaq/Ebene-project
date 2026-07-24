@@ -34,7 +34,7 @@ export const products: Product[] = [
     dark: false,
     bg: '#FFFFFF',
     image: '/images/polo.jpeg',
-    imageBack: '/images/cloth2.png',
+    imageBack: '/images/polo_back.jpeg',
   },
 ];
 

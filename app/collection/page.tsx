@@ -22,7 +22,6 @@ export default function Collection() {
         <p style={{fontSize:10,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 18px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.sectionFeatured}</p>
         <h1 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(44px,5vw,80px)',margin:'0 0 48px',lineHeight:1.05}}>{T.collectionTitle}</h1>
       </div>
-      <p style={{fontSize:9,letterSpacing:3,textTransform:'uppercase',color:'#000000',fontWeight:700,textAlign:'center',marginBottom:48,fontFamily:"'Aoboshi One',sans-serif"}}>{T.rotateHint}</p>
       <div className="collection-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))',gap:'80px 32px',alignItems:'start'}}>
         {products.map((p,i)=>(
           <div key={p.id} style={{justifySelf:'center'}}>
