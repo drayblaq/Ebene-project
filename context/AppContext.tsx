@@ -33,13 +33,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
     audio.volume = 0.38;
     audioRef.current = audio;
 
-    // Attempt immediate autoplay
+    // Muted autoplay is allowed by all browsers (no gesture required).
+    // Unmute immediately after playback starts → music plays automatically.
+    audio.muted = true;
     audio.play()
-      .then(() => { setMusicPlaying(true); })
+      .then(() => { audio.muted = false; setMusicPlaying(true); })
       .catch(() => {
-        // Browser blocked (no prior gesture). Start on first user interaction.
+        // Extremely rare fallback — wait for first interaction.
         setMusicNeedsGesture(true);
         const unlock = () => {
+          audio.muted = false;
           audio.play()
             .then(() => { setMusicPlaying(true); setMusicNeedsGesture(false); })
             .catch(() => {});
@@ -60,6 +63,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       audio.pause();
       setMusicPlaying(false);
     } else {
+      audio.muted = false;
       audio.play().then(() => setMusicPlaying(true)).catch(() => {});
     }
   }
