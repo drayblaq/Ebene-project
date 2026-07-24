@@ -34,32 +34,38 @@ export function AppProvider({ children }: { children: ReactNode }) {
     audio.volume = 0.38;
     audioRef.current = audio;
 
-    // Start muted — all browsers allow muted autoplay with no gesture.
-    // Audio is buffering/playing silently from the very first frame.
-    audio.muted = true;
+    // Stage 1: try unmuted play directly (works on desktop).
     audio.play()
-      .then(() => {
-        setMusicPlaying(true);
-        // Try programmatic unmute immediately (works on desktop Chrome/Firefox).
-        audio.muted = false;
-        // Belt-and-suspenders: some browsers (Chrome Android, Safari) require
-        // a real gesture to unmute. Attach a one-time listener so the FIRST
-        // tap/click anywhere — including on the splash screen — unmutes instantly.
-        const unmute = () => { audio.muted = false; };
-        document.addEventListener('click',      unmute, { once: true, capture: true });
-        document.addEventListener('touchstart', unmute, { once: true, capture: true });
-      })
+      .then(() => { setMusicPlaying(true); })
       .catch(() => {
-        // play() itself was blocked (rare). Unlock fully on first interaction.
-        setMusicNeedsGesture(true);
-        const unlock = () => {
-          audio.muted = false;
-          audio.play()
-            .then(() => { setMusicPlaying(true); setMusicNeedsGesture(false); })
-            .catch(() => {});
-        };
-        document.addEventListener('click',      unlock, { once: true, capture: true });
-        document.addEventListener('touchstart', unlock, { once: true, capture: true });
+        // Stage 2: muted autoplay — allowed everywhere, no gesture needed.
+        // Audio loads and buffers silently in the background.
+        audio.muted = true;
+        audio.play()
+          .then(() => {
+            // Unmute on the very first user touch/click (splash covers the
+            // whole screen for 5 s, so first touch hits it and unmutes).
+            const unmute = () => {
+              audio.muted = false;
+              setMusicPlaying(true);
+              setMusicNeedsGesture(false);
+            };
+            document.addEventListener('touchstart', unmute, { once: true, capture: true });
+            document.addEventListener('click',      unmute, { once: true, capture: true });
+            setMusicNeedsGesture(true); // pulse toggle until unmuted
+          })
+          .catch(() => {
+            // Both blocked — wait for interaction to start from scratch.
+            setMusicNeedsGesture(true);
+            const start = () => {
+              audio.muted = false;
+              audio.play()
+                .then(() => { setMusicPlaying(true); setMusicNeedsGesture(false); })
+                .catch(() => {});
+            };
+            document.addEventListener('touchstart', start, { once: true, capture: true });
+            document.addEventListener('click',      start, { once: true, capture: true });
+          });
       });
 
     return () => { audio.pause(); audio.src = ''; };
