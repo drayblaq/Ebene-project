@@ -76,11 +76,13 @@ a { color: inherit; text-decoration: none; }
 
   /* Hero */
   .sec-hero      { grid-template-columns: 1fr !important; }
-  .sec-hero-text { padding: 100px 24px 48px !important; }
+  /* Start content just below navbar instead of centering in full 100vh — removes oversized gap */
+  .sec-hero-text { padding: 84px 24px 40px !important; justify-content: flex-start !important; }
   .sec-hero-img  { display: none !important; }
   .sec-hero-scroll { display: none !important; }
-  .hero-wm-clip  { height: 110px !important; }
-  .hero-wm-img   { width: 546px !important; height: 772px !important; top: -337px !important; left: -130px !important; }
+  .hero-wm-clip  { height: 110px !important; margin-bottom: 32px !important; }
+  /* left: -120px gives 10px safety margin so É accent isn't hard-clipped at the edge */
+  .hero-wm-img   { width: 546px !important; height: 772px !important; top: -337px !important; left: -120px !important; }
 
   /* Featured / sections */
   .sec-feat       { padding: 72px 20px 60px !important; }
