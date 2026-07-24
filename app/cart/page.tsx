@@ -23,13 +23,19 @@ export default function Cart() {
   const T = tr[lang];
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const IG_USER = 'vinanblo_';
-  const IG_PROFILE = `https://www.instagram.com/${IG_USER}?igsh=MWx4enNodDBpMjIwZw%3D%3D&utm_source=qr`;
   const IG_DM = `https://ig.me/m/${IG_USER}`;
+  const [copied, setCopied] = useState(false);
 
   const orderText = cart.map(i=>`• ${lang==='fr'?i.name:i.nameEn} — Taille ${i.size} x${i.qty}`).join('\n');
   const fullMessage = lang==='fr'
     ? `Bonjour Ébène ! Je voudrais précommander :\n${orderText}\n\nMerci`
     : `Hello Ébène! I'd like to pre-order:\n${orderText}\n\nThank you`;
+
+  function handleCopy() {
+    try { navigator.clipboard.writeText(fullMessage); } catch {}
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  }
 
   function handleOrder() {
     try { navigator.clipboard.writeText(fullMessage); } catch {}
@@ -76,8 +82,24 @@ export default function Cart() {
                 <span style={{fontSize:13,color:'#FFFFFF',fontWeight:700,letterSpacing:1,fontFamily:"'Aoboshi One',sans-serif"}}>Total</span>
                 <span style={{fontFamily:"'Joti One',cursive",fontSize:28,color:'#814D2D'}}>{formatFCFA(total)}</span>
               </div>
-              <button onClick={handleOrder} style={{display:'block',width:'100%',background:'#814D2D',color:'#FFFFFF',textAlign:'center',padding:16,fontSize:12,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700,marginBottom:12,border:'none',cursor:'pointer'}}>{T.orderWhatsApp} →</button>
-              <p style={{fontSize:11,color:'#FFFFFF',textAlign:'center',margin:0,fontWeight:700,letterSpacing:1,fontFamily:"'Aoboshi One',sans-serif"}}>{lang==='fr'?'Votre commande sera copiée dans le presse-papiers':'Your order will be copied to clipboard'}</p>
+              {/* Order message preview */}
+              <div style={{background:'rgba(255,255,255,0.06)',border:'1px solid rgba(255,255,255,0.1)',padding:'16px 18px',marginBottom:16}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}}>
+                  <span style={{fontSize:10,letterSpacing:3,textTransform:'uppercase',color:'#814D2D',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
+                    {lang==='fr'?'Message à copier':'Message to copy'}
+                  </span>
+                  <button onClick={handleCopy} style={{fontSize:10,letterSpacing:2,textTransform:'uppercase',color:copied?'#4caf50':'#FFFFFF',background:'none',border:'none',cursor:'pointer',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",padding:0}}>
+                    {copied?(lang==='fr'?'Copié ✓':'Copied ✓'):(lang==='fr'?'Copier':'Copy')}
+                  </button>
+                </div>
+                <pre style={{fontSize:12,color:'#FFFFFF',margin:0,whiteSpace:'pre-wrap',wordBreak:'break-word',lineHeight:1.7,fontFamily:"'Aoboshi One',sans-serif",fontWeight:400}}>
+                  {fullMessage}
+                </pre>
+              </div>
+              <button onClick={handleOrder} style={{display:'block',width:'100%',background:'#814D2D',color:'#FFFFFF',textAlign:'center',padding:16,fontSize:12,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700,marginBottom:10,border:'none',cursor:'pointer'}}>{T.orderWhatsApp} →</button>
+              <p style={{fontSize:11,color:'#FFFFFF',textAlign:'center',margin:0,fontWeight:400,letterSpacing:0.5,fontFamily:"'Aoboshi One',sans-serif",lineHeight:1.6}}>
+                {lang==='fr'?'Copiez le message ci-dessus, puis collez-le dans le chat Instagram.':'Copy the message above, then paste it into the Instagram chat.'}
+              </p>
             </div>
           </div>
         </>

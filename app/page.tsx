@@ -75,7 +75,7 @@ export default function Home() {
       <Marquee items={[
         {image:'/images/icon-black-v2.png',invert:true},{text:'Ébène'},{text:T.nouvelleCollection,accent:true},
         {image:'/images/icon-black-v2.png',invert:true},{text:'Ébène'},{text:'Cotonou, Bénin',accent:true},
-        {image:'/images/icon-black-v2.png',invert:true},{text:'Ébène'},{image:'/images/icon-black-v2.png',invert:true},
+        {image:'/images/icon-black-v2.png',invert:true},{text:'Ébène'},{text:T.faitAvecAme,accent:true},
       ]} />
 
       {/* FEATURED PRODUCTS */}
