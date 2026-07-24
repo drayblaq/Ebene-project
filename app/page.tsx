@@ -55,9 +55,9 @@ export default function Home() {
 
       {/* MARQUEE 1 */}
       <Marquee items={[
-        {image:'/images/icon-black-v2.png',invert:true},{text:'Ébène'},{text:T.nouvelleCollection,accent:true},
-        {image:'/images/icon-black-v2.png',invert:true},{text:'Ébène'},{text:'Cotonou, Bénin',accent:true},
-        {image:'/images/icon-black-v2.png',invert:true},{text:'Ébène'},{image:'/images/icon-black-v2.png',invert:true},
+        {text:'Ébène'},{image:'/images/icon-black-v2.png',invert:true},{text:T.nouvelleCollection,accent:true},
+        {text:'Ébène'},{image:'/images/icon-black-v2.png',invert:true},{text:'Cotonou, Bénin',accent:true},
+        {text:'Ébène'},{image:'/images/icon-black-v2.png',invert:true},{text:'Cotonou',accent:true},
       ]} />
 
       {/* FEATURED PRODUCTS */}
