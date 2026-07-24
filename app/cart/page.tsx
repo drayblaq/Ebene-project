@@ -19,7 +19,7 @@ function CartItemImage({ item, lang }: { item: CartItem; lang: 'fr' | 'en' }) {
 }
 
 export default function Cart() {
-  const { lang, cart, removeFromCart, clearCart } = useApp();
+  const { lang, cart, removeFromCart, updateQty, clearCart } = useApp();
   const T = tr[lang];
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const IG_USER = 'vinanblo_';
@@ -66,8 +66,13 @@ export default function Cart() {
                     <p style={{fontSize:12,color:'#000000',letterSpacing:2,textTransform:'uppercase',margin:'0 0 6px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{lang==='fr'?item.mat:item.matEn}</p>
                     <p style={{fontSize:13,color:'#000000',margin:0,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.size}: {item.size}</p>
                   </div>
-                  <div style={{textAlign:'right',display:'flex',flexDirection:'column',alignItems:'flex-end',gap:10}}>
-                    <p style={{fontFamily:"'Joti One',cursive",fontSize:18,margin:0}}>{formatFCFA(item.price)}</p>
+                  <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:12}}>
+                    <p style={{fontFamily:"'Joti One',cursive",fontSize:18,margin:0}}>{formatFCFA(item.price * item.qty)}</p>
+                    <div style={{display:'flex',alignItems:'center',gap:0,border:'1.5px solid #000000'}}>
+                      <button onClick={()=>updateQty(item.id,item.size,-1)} style={{width:32,height:32,background:'none',border:'none',cursor:'pointer',fontSize:18,fontWeight:700,color:'#000000',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Aoboshi One',sans-serif"}}>−</button>
+                      <span style={{minWidth:28,textAlign:'center',fontSize:13,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",color:'#000000'}}>{item.qty}</span>
+                      <button onClick={()=>updateQty(item.id,item.size,+1)} style={{width:32,height:32,background:'none',border:'none',cursor:'pointer',fontSize:18,fontWeight:700,color:'#000000',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Aoboshi One',sans-serif'}}>+</button>
+                    </div>
                     <button onClick={()=>removeFromCart(item.id)} style={{fontSize:11,letterSpacing:2,color:'#000000',background:'none',border:'none',cursor:'pointer',fontFamily:"'Aoboshi One',sans-serif",textTransform:'uppercase',fontWeight:700,padding:0}}>{T.remove}</button>
                   </div>
                 </div>

@@ -11,6 +11,7 @@ type AppCtx = {
   cart: CartItem[];
   addToCart: (p: Product, size?: string) => void;
   removeFromCart: (id: number) => void;
+  updateQty: (id: number, size: string, delta: number) => void;
   clearCart: () => void;
 };
 
@@ -33,9 +34,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   const removeFromCart = (id: number) => setCart(c => c.filter(x => x.id !== id));
+  const updateQty = (id: number, size: string, delta: number) => setCart(c =>
+    c.flatMap(x => {
+      if (x.id !== id || x.size !== size) return [x];
+      const next = x.qty + delta;
+      return next <= 0 ? [] : [{ ...x, qty: next }];
+    })
+  );
   const clearCart = () => setCart([]);
 
-  return <Ctx.Provider value={{ lang, toggleLang, cart, addToCart, removeFromCart, clearCart }}>{children}</Ctx.Provider>;
+  return <Ctx.Provider value={{ lang, toggleLang, cart, addToCart, removeFromCart, updateQty, clearCart }}>{children}</Ctx.Provider>;
 }
 
 export function useApp() {
