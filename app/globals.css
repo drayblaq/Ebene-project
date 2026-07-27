@@ -66,26 +66,99 @@ a { color: inherit; text-decoration: none; }
 .hero-wm-clip { position: relative; height: 164px; overflow: hidden; margin-bottom: 40px; }
 .hero-wm-img  { position: absolute; width: 818px; height: 1157px; top: -505px; left: -195px; display: block; }
 
-/* ── Responsive ──────────────────────────────────────────── */
-@media (max-width: 768px) {
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE SYSTEM
+   Breakpoint scale (RESPONSIVE.md §4):
+     xs   ≤479px   — foldables closed, small/large phones
+     sm   480–767px — phones landscape, partially-open foldables
+     md   768–1023px — iPads portrait, small tablets, unfolded foldables
+     lg   1024–1279px — large tablets, iPads landscape
+     2xl  ≥1920px  — large monitors, ultra-wide
+   Mobile-first: base styles are written for xs; min-width queries add
+   complexity for larger viewports. !important needed here only because
+   inline styles (the project pattern) outrank class selectors.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── 2xl / 3xl: cap content width so lines stay readable ── */
+@media (min-width: 1920px) {
+  .sec-feat, .sec-story, .sec-newsletter {
+    max-width: 1800px;
+    margin-inline: auto;
+  }
+  .sec-collection, .sec-cart, .sec-contact {
+    max-width: 1600px;
+    margin-inline: auto;
+  }
+}
+
+/* ── lg: large tablets 1024–1279px — trim heavy desktop padding ── */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .sec-feat        { padding: 100px 56px 60px !important; }
+  .sec-story       { padding: 100px 56px !important; gap: 64px !important; }
+  .sec-newsletter  { padding: 100px 56px !important; }
+  .sec-collection  { padding: 100px 56px 80px !important; }
+  .sec-cart        { padding: 100px 56px 60px !important; }
+  .sec-contact     { padding: 100px 56px 60px !important; }
+  .footer-root     { padding: 48px 56px !important; }
+  .contact-grid    { gap: 60px !important; }
+}
+
+/* ── md: tablets 768–1023px — collapse tight 2-col layouts ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-root        { padding: 20px 36px !important; }
+
+  .sec-hero-text   { padding: 80px 36px 60px !important; }
+
+  .sec-feat        { padding: 80px 36px 60px !important; }
+
+  /* Story: stack to 1-col; show countdown, hide decorative images */
+  .sec-story       { grid-template-columns: 1fr !important; padding: 80px 36px !important; gap: 40px !important; }
+  .sec-story-img   { display: flex !important; flex-direction: column !important; align-items: center !important; }
+  .story-images-wrap { display: none !important; }
+  .story-countdown { border-top: none !important; padding-top: 0 !important; }
+
+  .sec-newsletter  { padding: 80px 36px !important; }
+
+  /* Product detail: collapse to 1-col — too cramped at 800px */
+  .product-grid    { grid-template-columns: 1fr !important; }
+  .product-img-col { height: 400px !important; position: static !important; min-height: unset !important; }
+  .product-detail-col { padding: 40px 36px 64px !important; justify-content: flex-start !important; }
+  .lifestyle-caption { padding: 28px 36px !important; }
+
+  .sec-collection  { padding: 80px 36px 60px !important; }
+
+  .sec-cart        { padding: 80px 36px 60px !important; }
+  .cart-grid       { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .cart-summary    { position: static !important; padding: 28px !important; }
+
+  .sec-contact     { padding: 80px 36px 60px !important; }
+  .contact-grid    { gap: 56px !important; }
+
+  .footer-root     { padding: 48px 36px !important; }
+  .newsletter-form { flex-direction: column !important; }
+  .newsletter-form input  { border-right: 1.5px solid rgba(255,255,255,0.15) !important; border-bottom: none !important; }
+  .newsletter-form button { border-left: 1.5px solid #814D2D !important; border-top: none !important; }
+}
+
+/* ── xs+sm: phones and below ≤767px ── */
+@media (max-width: 767px) {
   /* Navbar */
   .nav-root        { padding: 18px 24px !important; }
   .nav-side-links  { display: none !important; }
   .nav-right-links { display: none !important; }
   .nav-mobile-only { display: flex !important; }
 
-  /* Hero */
-  .sec-hero      { grid-template-columns: 1fr !important; height: auto !important; min-height: unset !important; }
-  /* Start content just below navbar instead of centering in full 100vh — removes oversized gap */
-  .sec-hero-text { padding: 84px 24px 48px !important; justify-content: flex-start !important; }
-  .sec-hero-img  { display: none !important; }
+  /* Hero — collapse to single column; use dvh with svh fallback */
+  .sec-hero        { grid-template-columns: 1fr !important; height: auto !important; min-height: 100svh !important; }
+  .sec-hero-text   { padding: 84px 24px 48px !important; justify-content: flex-start !important; }
+  .sec-hero-img    { display: none !important; }
   .sec-hero-scroll { display: none !important; }
+
   /*
-   * Mobile wordmark: switch from absolute-pixel clip to background-image.
-   * PNG content at x=23.8–74.5%, y=44.3–57.2% of the 420×594 frame.
-   * background-size:200% makes text span ~50.7% of bg width ≈ full content width.
-   * background-position:48% 51% is geometry-derived and holds at any mobile width.
-   * Verified at 360px, 375px, 414px — full ÉBÈNE visible, left-aligned, no clipping.
+   * Mobile wordmark: CSS background-image replaces absolute-pixel clip.
+   * PNG content at x=23.8–74.5%, y=44.3–57.2% of 420×594 frame.
+   * background-size:200% spans the text at ~full content width.
+   * background-position:48% 51% is geometry-derived; holds 360–430px.
    */
   .hero-wm-clip {
     height: auto !important;
@@ -98,54 +171,77 @@ a { color: inherit; text-decoration: none; }
     background-position: 48% 51% !important;
     background-repeat: no-repeat !important;
   }
-  /* hide the absolutely-positioned <img> on mobile — bg-image handles it */
   .hero-wm-img { display: none !important; }
 
-  /* Featured / sections */
-  .sec-feat       { padding: 72px 20px 60px !important; }
-  .sec-story      { grid-template-columns: 1fr !important; padding: 72px 24px 72px !important; gap: 48px !important; }
-  .sec-story-img  { display: none !important; }
-  .sec-newsletter { padding: 72px 24px !important; }
+  /* Featured products */
+  .sec-feat        { padding: 72px 20px 60px !important; }
+  .feat-scroll     { gap: 20px !important; padding-inline: 0 !important; }
 
-  /* Collection */
-  .sec-collection   { padding: 96px 20px 60px !important; }
-  .collection-grid  { grid-template-columns: repeat(auto-fill, minmax(300px,1fr)) !important; gap: 56px 16px !important; }
-  .collection-header { margin-bottom: 40px !important; }
+  /* Story: stack, show countdown, hide decorative cloth/tag images */
+  .sec-story       { grid-template-columns: 1fr !important; padding: 72px 24px !important; gap: 40px !important; }
+  .sec-story-img   { display: flex !important; flex-direction: column !important; align-items: center !important; }
+  .story-images-wrap { display: none !important; }
+  .story-countdown { border-top: none !important; padding-top: 0 !important; }
 
-  /* Cart */
-  .sec-cart      { padding: 96px 20px 60px !important; }
-  .cart-grid     { grid-template-columns: 1fr !important; gap: 32px !important; }
-  .cart-summary  { position: static !important; }
+  /* Countdown numbers — tighter on small screens */
+  .countdown-unit  { flex-direction: column !important; align-items: center !important; }
+  .countdown-num   { font-size: clamp(24px, 6vw, 36px) !important; min-width: 36px !important; }
+  .countdown-unit > div { padding: 0 8px !important; }
+  .countdown-sep   { font-size: clamp(20px, 5vw, 30px) !important; }
 
-  /* Contact */
-  .sec-contact    { padding: 96px 24px 60px !important; }
-  .contact-grid   { grid-template-columns: 1fr !important; gap: 48px !important; }
-
-  /* Product detail */
-  .product-grid      { grid-template-columns: 1fr !important; }
-  .product-img-col   { height: 420px !important; position: static !important; min-height: unset !important; }
-  .product-detail-col { padding: 36px 24px 64px !important; justify-content: flex-start !important; }
-
-  /* Footer */
-  .footer-root   { padding: 40px 24px !important; }
-  .footer-top    { flex-direction: column !important; align-items: flex-start !important; gap: 20px !important; margin-bottom: 32px !important; }
-  .footer-bottom { text-align: center !important; }
-
-  /* Newsletter */
+  .sec-newsletter  { padding: 72px 24px !important; }
   .newsletter-form { flex-direction: column !important; }
   .newsletter-form input  { border-right: 1.5px solid rgba(255,255,255,0.15) !important; border-bottom: none !important; }
   .newsletter-form button { border-left: 1.5px solid #814D2D !important; border-top: none !important; }
 
-  /* Featured horizontal scroll — remove stagger offset on mobile */
-  .feat-scroll { gap: 20px !important; padding-left: 0 !important; padding-right: 0 !important; }
+  /* Collection — minmax uses min() so grid never forces overflow */
+  .sec-collection  { padding: 96px 20px 60px !important; }
+  .collection-grid { grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)) !important; gap: 56px 16px !important; }
+  .collection-header { margin-bottom: 40px !important; }
 
   /* Cart */
-  .cart-item-row { gap: 14px !important; }
-  .cart-summary  { padding: 28px !important; }
+  .sec-cart        { padding: 96px 20px 60px !important; }
+  .cart-grid       { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .cart-item-row   { gap: 14px !important; }
+  .cart-summary    { position: static !important; padding: 28px !important; }
 
-  /* Product detail lifestyle */
+  /* Contact */
+  .sec-contact     { padding: 96px 24px 60px !important; }
+  .contact-grid    { grid-template-columns: 1fr !important; gap: 48px !important; }
+
+  /* Product detail */
+  .product-grid       { grid-template-columns: 1fr !important; }
+  .product-img-col    { height: 380px !important; position: static !important; min-height: unset !important; }
+  .product-detail-col { padding: 36px 24px 64px !important; justify-content: flex-start !important; }
+  /* Lifestyle gallery: single column on phones */
+  .product-lifestyle-grid { grid-template-columns: 1fr !important; }
   .lifestyle-caption { padding: 28px 24px !important; }
 
-  /* Buttons — full width on mobile for CTAs */
-  .btn-ol { padding: 14px 20px !important; font-size: 10px !important; }
+  /* Footer */
+  .footer-root     { padding: 40px 24px !important; }
+  .footer-top      { flex-direction: column !important; align-items: flex-start !important; gap: 20px !important; margin-bottom: 32px !important; }
+  .footer-bottom   { text-align: center !important; }
+
+  /* Buttons */
+  .btn-ol          { padding: 14px 20px !important; font-size: 10px !important; }
+}
+
+/* ── xs: very small screens ≤360px (foldables closed, budget Androids) ── */
+@media (max-width: 360px) {
+  .nav-root        { padding: 16px 16px !important; }
+  .sec-hero-text   { padding: 72px 16px 40px !important; }
+  .hero-wm-clip    { padding-bottom: 38% !important; }
+  .sec-feat        { padding: 60px 12px 48px !important; }
+  .feat-scroll     { gap: 12px !important; }
+  .sec-story       { padding: 60px 16px !important; }
+  .sec-newsletter  { padding: 60px 16px !important; }
+  .sec-collection  { padding: 80px 12px 48px !important; }
+  /* Force single column at narrowest widths */
+  .collection-grid { grid-template-columns: 1fr !important; }
+  .sec-cart        { padding: 80px 12px 48px !important; }
+  .cart-summary    { padding: 20px !important; }
+  .sec-contact     { padding: 80px 16px 48px !important; }
+  .footer-root     { padding: 32px 16px !important; }
+  .product-detail-col { padding: 28px 16px 48px !important; }
+  .product-img-col { height: 300px !important; }
 }

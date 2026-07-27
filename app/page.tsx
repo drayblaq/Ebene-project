@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="sec-hero" style={{height:'100vh',background:'#FFFFFF',display:'grid',gridTemplateColumns:'1fr 1fr',position:'relative',overflow:'hidden'}}>
+      <section className="sec-hero" style={{height:'100dvh',background:'#FFFFFF',display:'grid',gridTemplateColumns:'1fr 1fr',position:'relative',overflow:'hidden'}}>
         <div className="sec-hero-text" style={{display:'flex',flexDirection:'column',justifyContent:'center',padding:'90px 56px 60px 80px',position:'relative',zIndex:2}}>
           <p style={{fontSize:11,letterSpacing:6,textTransform:'uppercase',color:'#814D2D',margin:'0 0 28px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.heroSub}</p>
           {/* Wordmark: precise clip based on PNG bounding box x=100-313, y=263-340 in 420×594 */}
@@ -103,12 +103,12 @@ export default function Home() {
           <p style={{color:'#FFFFFF',fontSize:16,lineHeight:1.95,fontWeight:400,margin:'0 0 0',maxWidth:440,textWrap:'pretty',fontFamily:"'Aoboshi One',sans-serif"} as React.CSSProperties}>{T.storyP2}</p>
         </div>
         <div className="fade-in d2 sec-story-img" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
-          <div style={{position:'relative',width:'100%',display:'flex',justifyContent:'center',paddingBottom:60}}>
+          <div className="story-images-wrap" style={{position:'relative',width:'100%',display:'flex',justifyContent:'center',paddingBottom:60}}>
             <Image src="/images/cloth1.png" alt="" width={240} height={320} style={{width:'55%',maxWidth:240,filter:'drop-shadow(0 24px 64px rgba(0,0,0,0.6))',zIndex:2,position:'relative',objectFit:'contain'}} />
             <Image src="/images/tag.png" alt="" width={165} height={220} className="animate-tag-swing" style={{width:'38%',maxWidth:165,position:'absolute',bottom:-30,right:'8%',filter:'drop-shadow(0 16px 40px rgba(0,0,0,0.5)) invert(1)',transform:'rotate(10deg)',zIndex:1,objectFit:'contain'}} />
           </div>
           {/* Countdown to launch */}
-          <div style={{width:'100%',paddingTop:32,borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+          <div className="story-countdown" style={{width:'100%',paddingTop:32,borderTop:'1px solid rgba(255,255,255,0.08)'}}>
             <p style={{fontSize:10,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 20px',fontWeight:700,textAlign:'center',fontFamily:"'Aoboshi One',sans-serif"}}>
               {lang==='fr'?'Disponible dans':'Available in'}
             </p>
@@ -119,12 +119,12 @@ export default function Home() {
                 {n:String(timeLeft.m).padStart(2,'0'), l:lang==='fr'?'Min':'Min'},
                 {n:String(timeLeft.s).padStart(2,'0'), l:lang==='fr'?'Sec':'Sec'},
               ].map((u,i)=>(
-                <div key={u.l} style={{display:'flex',alignItems:'stretch'}}>
+                <div key={u.l} className="countdown-unit" style={{display:'flex',alignItems:'stretch'}}>
                   <div style={{textAlign:'center',padding:'0 20px'}}>
-                    <p style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(32px,4vw,52px)',color:'#814D2D',margin:0,lineHeight:1,minWidth:60}}>{u.n}</p>
+                    <p className="countdown-num" style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(32px,4vw,52px)',color:'#814D2D',margin:0,lineHeight:1,minWidth:60}}>{u.n}</p>
                     <p style={{fontSize:10,letterSpacing:3,textTransform:'uppercase',color:'#FFFFFF',margin:'8px 0 0',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{u.l}</p>
                   </div>
-                  {i<3 && <span style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(28px,3.5vw,44px)',color:'#814D2D',alignSelf:'flex-start',paddingTop:2,opacity:0.6}}>:</span>}
+                  {i<3 && <span className="countdown-sep" style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(28px,3.5vw,44px)',color:'#814D2D',alignSelf:'flex-start',paddingTop:2,opacity:0.6}}>:</span>}
                 </div>
               ))}
             </div>
