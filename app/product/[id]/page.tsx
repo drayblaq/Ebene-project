@@ -157,7 +157,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
     </section>
     {/* LIFESTYLE GALLERY */}
     <section style={{background:'#000000'}}>
-      <div className="product-lifestyle-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:3}}>
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:3}}>
         <div style={{position:'relative',aspectRatio:'2/3',overflow:'hidden'}}>
           <Image src="/images/9.png" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
         </div>
