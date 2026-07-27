@@ -70,7 +70,7 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
   }
 
   return (
-    <div ref={scRef} className="card-scene" onClick={handleCardClick} style={{marginTop:offsetTop,width:310,flexShrink:0,cursor:'grab'}}>
+    <div ref={scRef} className="card-scene" onClick={handleCardClick} style={{marginTop:offsetTop,flexShrink:0,cursor:'grab'}}>
       <div style={{display:'flex',justifyContent:'center'}}>
         <div style={{width:1.5,height:60,background:`linear-gradient(to bottom,transparent,${d?'#555':'#bbb'})`}} />
       </div>

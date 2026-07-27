@@ -101,6 +101,30 @@ export default function Home() {
           <h2 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(38px,3.8vw,60px)',color:'#FFFFFF',margin:'0 0 36px',lineHeight:1.1}}>{T.storyTitleLine1}<br/><em>{T.storyTitleLine2}</em></h2>
           <p style={{color:'#FFFFFF',fontSize:16,lineHeight:1.95,fontWeight:400,margin:'0 0 22px',maxWidth:440,textWrap:'pretty',fontFamily:"'Aoboshi One',sans-serif"} as React.CSSProperties}>{T.storyP1}</p>
           <p style={{color:'#FFFFFF',fontSize:16,lineHeight:1.95,fontWeight:400,margin:'0 0 0',maxWidth:440,textWrap:'pretty',fontFamily:"'Aoboshi One',sans-serif"} as React.CSSProperties}>{T.storyP2}</p>
+          {/* Mobile-only countdown — desktop version lives in sec-story-img */}
+          <div className="story-countdown-mob" style={{display:'none'}}>
+            <div style={{marginTop:48,paddingTop:32,borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+              <p style={{fontSize:10,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 20px',fontWeight:700,textAlign:'center',fontFamily:"'Aoboshi One',sans-serif"}}>
+                {lang==='fr'?'Disponible dans':'Available in'}
+              </p>
+              <div style={{display:'flex',gap:0,justifyContent:'center'}}>
+                {[
+                  {n:String(timeLeft.d).padStart(2,'0'), l:lang==='fr'?'Jours':'Days'},
+                  {n:String(timeLeft.h).padStart(2,'0'), l:lang==='fr'?'Heures':'Hours'},
+                  {n:String(timeLeft.m).padStart(2,'0'), l:lang==='fr'?'Min':'Min'},
+                  {n:String(timeLeft.s).padStart(2,'0'), l:lang==='fr'?'Sec':'Sec'},
+                ].map((u,i)=>(
+                  <div key={u.l} style={{display:'flex',alignItems:'stretch'}}>
+                    <div style={{textAlign:'center',padding:'0 14px'}}>
+                      <p style={{fontFamily:"'Joti One',cursive",fontSize:40,color:'#814D2D',margin:0,lineHeight:1,minWidth:44}}>{u.n}</p>
+                      <p style={{fontSize:10,letterSpacing:3,textTransform:'uppercase',color:'#FFFFFF',margin:'8px 0 0',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{u.l}</p>
+                    </div>
+                    {i<3 && <span style={{fontFamily:"'Joti One',cursive",fontSize:36,color:'#814D2D',alignSelf:'flex-start',paddingTop:2,opacity:0.6}}>:</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
         <div className="fade-in d2 sec-story-img" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
           <div className="story-cloth-img" style={{position:'relative',width:'100%',display:'flex',justifyContent:'center',paddingBottom:60}}>
