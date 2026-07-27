@@ -103,7 +103,7 @@ export default function Home() {
           <p style={{color:'#FFFFFF',fontSize:16,lineHeight:1.95,fontWeight:400,margin:'0 0 0',maxWidth:440,textWrap:'pretty',fontFamily:"'Aoboshi One',sans-serif"} as React.CSSProperties}>{T.storyP2}</p>
         </div>
         <div className="fade-in d2 sec-story-img" style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
-          <div style={{position:'relative',width:'100%',display:'flex',justifyContent:'center',paddingBottom:60}}>
+          <div className="story-cloth-img" style={{position:'relative',width:'100%',display:'flex',justifyContent:'center',paddingBottom:60}}>
             <Image src="/images/cloth1.png" alt="" width={240} height={320} style={{width:'55%',maxWidth:240,filter:'drop-shadow(0 24px 64px rgba(0,0,0,0.6))',zIndex:2,position:'relative',objectFit:'contain'}} />
             <Image src="/images/tag.png" alt="" width={165} height={220} className="animate-tag-swing" style={{width:'38%',maxWidth:165,position:'absolute',bottom:-30,right:'8%',filter:'drop-shadow(0 16px 40px rgba(0,0,0,0.5)) invert(1)',transform:'rotate(10deg)',zIndex:1,objectFit:'contain'}} />
           </div>
