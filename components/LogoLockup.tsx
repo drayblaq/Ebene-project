@@ -45,7 +45,7 @@ export default function LogoLockup({
       {!iconOnly && (
         <div style={{ position: 'relative', width: wmarkW, height: wmarkH, overflow: 'hidden', flexShrink: 0 }}>
           <Image
-            src="/images/wordmark-v2.jpeg"
+            src="/images/wordmark-v2-removebg-preview.png"
             alt="Ébène"
             fill
             style={{ objectFit: 'cover', objectPosition: '50% 50%', filter }}

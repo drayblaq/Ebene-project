@@ -52,7 +52,7 @@ export default function Home() {
           {/* Wordmark: precise clip based on PNG bounding box x=100-313, y=263-340 in 420×594 */}
           <div className="hero-wm-clip">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/wordmark-v2.jpeg" alt="Ébène" className="hero-wm-img" />
+            <img src="/images/wordmark-v2-removebg-preview.png" alt="Ébène" className="hero-wm-img" />
           </div>
           <div style={{display:'flex',gap:20,alignItems:'center',flexWrap:'wrap'}}>
             <button onClick={()=>router.push('/collection')} className="btn-ol btn-ol-lt">{T.heroCta} →</button>
