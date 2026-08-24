@@ -33,8 +33,8 @@ export const products: Product[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     dark: false,
     bg: '#FFFFFF',
-    image: '/images/polo.jpeg',
-    imageBack: '/images/polo_back.jpeg',
+    image: '/images/polo-front-v2.jpeg',
+    imageBack: '/images/polo-back-v2.jpeg',
   },
 ];
 
