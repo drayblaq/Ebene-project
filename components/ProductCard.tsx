@@ -92,8 +92,12 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
                 <Image src={p.image} alt={name} fill onError={()=>setImgErr(true)} style={{objectFit:'contain',objectPosition:'center center',opacity:isSO?0.3:1,filter:isSO?'grayscale(100%)':'none'}} />
               </div>
             )}
-            {badge && <div style={{position:'absolute',bottom:-14,left:'50%',transform:'translateX(-50%)',background:badgeBg,color:'#FFFFFF',fontSize:9,letterSpacing:2,padding:'4px 14px',borderRadius:20,textTransform:'uppercase',fontWeight:600,whiteSpace:'nowrap',zIndex:2}}>{badge}</div>}
           </div>
+          {badge && (
+            <div style={{display:'flex',justifyContent:'center',marginTop:10}}>
+              <span style={{background:badgeBg,color:'#FFFFFF',fontSize:9,letterSpacing:2,padding:'4px 14px',borderRadius:20,textTransform:'uppercase',fontWeight:600,whiteSpace:'nowrap'}}>{badge}</span>
+            </div>
+          )}
           <div style={{padding:'16px 20px 20px',marginTop:'auto'}}>
             <h3 style={{fontFamily:"'Joti One',cursive",fontSize:21,margin:'0 0 4px',lineHeight:1.2,color:fg,fontWeight:400}}>{name}</h3>
             <p style={{fontSize:11,color:mu,letterSpacing:2,textTransform:'uppercase',margin:'0 0 12px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{mat}</p>
