@@ -71,6 +71,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return () => { audio.pause(); audio.src = ''; };
   }, []);
 
+  useEffect(() => {
+    const handleVisibility = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (document.hidden) {
+        audio.pause();
+      } else if (musicPlaying) {
+        audio.play().catch(() => {});
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, [musicPlaying]);
+
   // Called inside a real user-gesture (e.g. splash tap) to guarantee unmuted playback
   function unlockAudio() {
     const audio = audioRef.current;

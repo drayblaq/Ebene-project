@@ -89,10 +89,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             {name}
           </h1>
 
-          <p style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(18px,2vw,26px)',color:'#814D2D',margin:'0 0 32px',fontWeight:400,letterSpacing:1}}>
-            {lang==='fr'?'Le Polo Terracotta':'The Terracotta Polo'}
-          </p>
-
           <div style={{width:48,height:1.5,background:'#000000',marginBottom:32}} />
 
           <div style={{marginBottom:40}}>

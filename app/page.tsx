@@ -108,11 +108,7 @@ export default function Home() {
 
       {/* FEATURED PRODUCTS */}
       <section className="sec-feat" style={{padding:'130px 80px 80px',background:'#FFFFFF'}}>
-        <div className="fade-in" style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:16}}>
-          <div>
-            <p style={{fontSize:12,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 18px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.sectionFeatured}</p>
-            <h2 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(38px,4.5vw,68px)',margin:0,lineHeight:1.05}}>{T.featuredTitle}</h2>
-          </div>
+        <div className="fade-in" style={{display:'flex',justifyContent:'flex-end',marginBottom:16}}>
           <button onClick={()=>router.push('/collection')} className="btn-ol btn-ol-lt">{T.seeAll} →</button>
         </div>
         <div className="feat-scroll" style={{display:'flex',gap:36,overflowX:'auto',paddingBottom:24,alignItems:'flex-start',scrollbarWidth:'none',WebkitOverflowScrolling:'touch'} as React.CSSProperties}>
