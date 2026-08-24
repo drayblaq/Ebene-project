@@ -76,7 +76,7 @@ export default function Home() {
           {/* Wordmark: precise clip based on PNG bounding box x=100-313, y=263-340 in 420×594 */}
           <div className="hero-wm-clip">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/wordmark-v2-removebg-preview.png" alt="Ébène" className="hero-wm-img" />
+            <img src="/images/hero_logo.png" alt="Ébène" className="hero-wm-img" />
           </div>
           <div style={{display:'flex',gap:20,alignItems:'center',flexWrap:'wrap'}}>
             <button onClick={()=>router.push('/collection')} className="btn-ol btn-ol-lt">{T.heroCta} →</button>
@@ -84,7 +84,7 @@ export default function Home() {
           </div>
         </div>
         <div className="sec-hero-img" style={{position:'relative',overflow:'hidden'}}>
-          <Image src="/images/hero_logo.png" alt="Ébène" fill className="animate-float" style={{objectFit:'cover',objectPosition:'center top'}} priority />
+          <Image src="/images/8.png" alt="Ébène" fill className="animate-float" style={{objectFit:'cover',objectPosition:'center top'}} priority />
           <div style={{position:'absolute',inset:0,background:'linear-gradient(to right,rgba(255,255,255,0.12),transparent)',pointerEvents:'none',zIndex:1}}/>
           <div style={{position:'absolute',bottom:40,right:40,width:88,height:88,zIndex:2}} className="animate-spin-text">
             <svg viewBox="0 0 100 100" width="88" height="88">
