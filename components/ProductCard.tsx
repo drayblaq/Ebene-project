@@ -122,7 +122,7 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
           </div>
           <div style={{display:'flex',flexDirection:'column',gap:8}}>
             <button onClick={e=>{e.stopPropagation();onAdd(p);}} style={{display:'block',width:'100%',background:d?'#000000':'#814D2D',color:'#FFFFFF',border:'none',padding:12,fontSize:11,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",cursor:'pointer',fontWeight:600}}>{T.addToCart}</button>
-            <a href="https://www.instagram.com/vinanblo_?igsh=MWx4enNodDBpMjIwZw%3D%3D&utm_source=qr" onClick={e=>e.stopPropagation()} target="_blank" rel="noreferrer" style={{display:'block',textAlign:'center',fontSize:10,letterSpacing:2,color:bmu,textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",textDecoration:'none'}}>Instagram →</a>
+            <a href="https://www.instagram.com/_xwe.ebene" onClick={e=>e.stopPropagation()} target="_blank" rel="noreferrer" style={{display:'block',textAlign:'center',fontSize:10,letterSpacing:2,color:bmu,textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",textDecoration:'none'}}>Instagram →</a>
           </div>
         </div>
       </div>

@@ -22,8 +22,7 @@ export default function Cart() {
   const { lang, cart, removeFromCart, updateQty, clearCart } = useApp();
   const T = tr[lang];
   const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const IG_USER = 'vinanblo_';
-  const IG_DM = `https://ig.me/m/${IG_USER}`;
+  const IG_DM = 'https://ig.me/m/_xwe.ebene';
   const [copied, setCopied] = useState(false);
 
   const orderText = cart.map(i=>`• ${lang==='fr'?i.name:i.nameEn} Taille ${i.size} x${i.qty}`).join('\n');
@@ -102,7 +101,7 @@ export default function Cart() {
                   {fullMessage}
                 </pre>
               </div>
-              <button onClick={handleOrder} style={{display:'block',width:'100%',background:'#814D2D',color:'#FFFFFF',textAlign:'center',padding:16,fontSize:12,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700,marginBottom:10,border:'none',cursor:'pointer'}}>{T.orderWhatsApp} →</button>
+              <button onClick={handleOrder} style={{display:'block',width:'100%',background:'#814D2D',color:'#FFFFFF',textAlign:'center',padding:16,fontSize:12,letterSpacing:3,textTransform:'uppercase',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700,marginBottom:10,border:'none',cursor:'pointer'}}>{T.orderInstagram} →</button>
               <p style={{fontSize:11,color:'#FFFFFF',textAlign:'center',margin:0,fontWeight:400,letterSpacing:0.5,fontFamily:"'Aoboshi One',sans-serif",lineHeight:1.6}}>
                 {lang==='fr'?'Copiez le message ci-dessus, puis collez-le dans le chat Instagram.':'Copy the message above, then paste it into the Instagram chat.'}
               </p>
