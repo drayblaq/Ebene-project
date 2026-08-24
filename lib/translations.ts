@@ -29,6 +29,7 @@ export const tr = {
     addToCart:'Précommander', material:'Matière',
     backToCollection:'Retour à la collection', selectSize:'Choisir la taille', soldOut:'Épuisé',
     priceTbd:'Prix à venir',
+    contactSuccess:'Message envoyé ! Nous vous répondrons bientôt.', contactError:'Une erreur est survenue. Réessayez.',
   },
   en: {
     collection:'Collection', histoire:'Story', contact:'Contact', panier:'Cart',
@@ -58,6 +59,7 @@ export const tr = {
     addToCart:'Pre-order', material:'Material',
     backToCollection:'Back to collection', selectSize:'Select size', soldOut:'Sold out',
     priceTbd:'Price coming soon',
+    contactSuccess:"Message sent! We'll get back to you soon.", contactError:'Something went wrong. Please try again.',
   }
 } as const;
 

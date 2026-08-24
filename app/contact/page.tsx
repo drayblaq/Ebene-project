@@ -1,10 +1,43 @@
 'use client';
+import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { tr } from '@/lib/translations';
 
 export default function Contact() {
   const { lang } = useApp();
   const T = tr[lang];
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<'idle'|'loading'|'success'|'error'>('idle');
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!name.trim() || !email.trim() || !message.trim()) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return;
+    setStatus('loading');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? '',
+          subject: `New Ébène contact message from ${name.trim()}`,
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+        }),
+      });
+      const data = await res.json();
+      setStatus(data.success ? 'success' : 'error');
+    } catch {
+      setStatus('error');
+    }
+  }
+
+  const successMsg = T.contactSuccess;
+  const errorMsg = T.contactError;
 
   return (
     <section className="sec-contact" style={{minHeight:'100vh',background:'#FFFFFF',padding:'140px 80px 80px'}}>
@@ -31,19 +64,61 @@ export default function Contact() {
           </div>
         </div>
         <div>
-          <form style={{display:'flex',flexDirection:'column',gap:28}} onSubmit={e=>e.preventDefault()}>
-            {[{label:T.nameLabel,type:'text'},{label:'Email',type:'email'}].map(({label,type})=>(
-              <div key={label}>
-                <label style={{fontSize:12,letterSpacing:3,textTransform:'uppercase',display:'block',marginBottom:10,color:'#000000',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{label}</label>
-                <input type={type} style={{width:'100%',border:'none',borderBottom:'1.5px solid rgba(0,0,0,0.15)',padding:'12px 0',fontSize:16,fontWeight:400,background:'transparent',color:'#000000',fontFamily:"'Aoboshi One',sans-serif"}} />
-              </div>
-            ))}
-            <div>
-              <label style={{fontSize:12,letterSpacing:3,textTransform:'uppercase',display:'block',marginBottom:10,color:'#000000',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.messageLabel}</label>
-              <textarea rows={5} style={{width:'100%',border:'none',borderBottom:'1.5px solid rgba(0,0,0,0.15)',padding:'12px 0',fontSize:16,fontWeight:400,background:'transparent',color:'#000000',resize:'none',fontFamily:"'Aoboshi One',sans-serif"}} />
+          {status === 'success' ? (
+            <div style={{display:'flex',flexDirection:'column',justifyContent:'center',height:'100%',minHeight:260}}>
+              <p style={{fontSize:12,letterSpacing:4,textTransform:'uppercase',color:'#814D2D',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif",margin:'0 0 16px'}}>✓</p>
+              <p style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(22px,2.5vw,34px)',color:'#000000',margin:0,lineHeight:1.2}}>{successMsg}</p>
             </div>
-            <button type="submit" className="btn-ol btn-ol-lt" style={{alignSelf:'flex-start',marginTop:8}}>{T.send} →</button>
-          </form>
+          ) : (
+            <form style={{display:'flex',flexDirection:'column',gap:28}} onSubmit={handleSubmit} noValidate>
+              <div>
+                <label style={{fontSize:12,letterSpacing:3,textTransform:'uppercase',display:'block',marginBottom:10,color:'#000000',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.nameLabel}</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  disabled={status === 'loading'}
+                  required
+                  style={{width:'100%',border:'none',borderBottom:`1.5px solid ${!name.trim()&&status==='error'?'#cc4444':'rgba(0,0,0,0.15)'}`,padding:'12px 0',fontSize:16,fontWeight:400,background:'transparent',color:'#000000',fontFamily:"'Aoboshi One',sans-serif"}}
+                />
+              </div>
+              <div>
+                <label style={{fontSize:12,letterSpacing:3,textTransform:'uppercase',display:'block',marginBottom:10,color:'#000000',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>Email</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  disabled={status === 'loading'}
+                  required
+                  style={{width:'100%',border:'none',borderBottom:`1.5px solid ${!email.trim()&&status==='error'?'#cc4444':'rgba(0,0,0,0.15)'}`,padding:'12px 0',fontSize:16,fontWeight:400,background:'transparent',color:'#000000',fontFamily:"'Aoboshi One',sans-serif"}}
+                />
+              </div>
+              <div>
+                <label style={{fontSize:12,letterSpacing:3,textTransform:'uppercase',display:'block',marginBottom:10,color:'#000000',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.messageLabel}</label>
+                <textarea
+                  rows={5}
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}
+                  disabled={status === 'loading'}
+                  required
+                  style={{width:'100%',border:'none',borderBottom:`1.5px solid ${!message.trim()&&status==='error'?'#cc4444':'rgba(0,0,0,0.15)'}`,padding:'12px 0',fontSize:16,fontWeight:400,background:'transparent',color:'#000000',resize:'none',fontFamily:"'Aoboshi One',sans-serif"}}
+                />
+              </div>
+              <div style={{display:'flex',flexDirection:'column',gap:10,alignItems:'flex-start'}}>
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="btn-ol btn-ol-lt"
+                  style={{marginTop:8,opacity:status==='loading'?0.6:1}}
+                >
+                  {status === 'loading' ? '…' : `${T.send} →`}
+                </button>
+                {status === 'error' && (
+                  <p style={{fontSize:12,color:'#cc4444',fontWeight:700,letterSpacing:1,fontFamily:"'Aoboshi One',sans-serif",margin:0}}>{errorMsg}</p>
+                )}
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </section>
