@@ -15,8 +15,7 @@ export default function Contact() {
           <div style={{display:'flex',flexDirection:'column',gap:36}}>
             {[
               {label:T.addressLabel, val:'Cotonou, Bénin\nRépublique du Bénin'},
-              {label:'WhatsApp', val:'+229 00 00 00 00'},
-              {label:'Email', val:'hello@ebene-brand.com'},
+              {label:'Email', val:'wearebene29@gmail.com'},
             ].map(({label,val})=>(
               <div key={label}>
                 <p style={{fontSize:12,letterSpacing:3,textTransform:'uppercase',color:'#814D2D',margin:'0 0 10px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{label}</p>
@@ -26,7 +25,7 @@ export default function Contact() {
             <div>
               <p style={{fontSize:12,letterSpacing:3,textTransform:'uppercase',color:'#814D2D',margin:'0 0 14px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.social}</p>
               <div style={{display:'flex',gap:24}}>
-                {['Instagram','TikTok'].map(s=><a key={s} href="#" className="nav-lnk" style={{fontSize:12,letterSpacing:2,textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{s}</a>)}
+                <a href="https://www.instagram.com/_xwe.ebene" target="_blank" rel="noreferrer" className="nav-lnk" style={{fontSize:12,letterSpacing:2,textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>Instagram</a>
               </div>
             </div>
           </div>

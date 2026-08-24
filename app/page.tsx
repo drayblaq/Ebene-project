@@ -44,7 +44,11 @@ export default function Home() {
       {/* HERO */}
       <section className="sec-hero" style={{height:'100vh',background:'#FFFFFF',display:'grid',gridTemplateColumns:'1fr 1fr',position:'relative',overflow:'hidden'}}>
         <div className="sec-hero-text" style={{display:'flex',flexDirection:'column',justifyContent:'center',padding:'90px 56px 60px 80px',position:'relative',zIndex:2}}>
-          <p style={{fontSize:11,letterSpacing:6,textTransform:'uppercase',color:'#814D2D',margin:'0 0 28px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.heroSub}</p>
+          <p style={{fontSize:11,letterSpacing:6,textTransform:'uppercase',color:'#000000',margin:'0 0 28px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
+            {lang==='fr'
+              ? <>Collection <span style={{color:'#814D2D'}}>N'naho</span> 2026</>
+              : <><span style={{color:'#814D2D'}}>N'naho</span> Collection 2026</>}
+          </p>
           {/* Wordmark: precise clip based on PNG bounding box x=100-313, y=263-340 in 420×594 */}
           <div className="hero-wm-clip">
             {/* eslint-disable-next-line @next/next/no-img-element */}

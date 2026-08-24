@@ -79,7 +79,11 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
         <div className="card-face" style={{background:bg,boxShadow:d?'4px 8px 40px rgba(0,0,0,0.3)':'4px 8px 28px rgba(0,0,0,0.08)'}}>
           <div style={{padding:16,display:'flex',flexDirection:'column',alignItems:'center',borderBottom:`1px solid ${d?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.06)'}`}}>
             <div style={{width:13,height:13,borderRadius:'50%',border:`1.5px solid ${d?'rgba(255,255,255,0.15)':'rgba(0,0,0,0.15)'}`,marginBottom:12,background:d?'rgba(255,255,255,0.04)':'rgba(0,0,0,0.03)'}} />
-            <span style={{fontSize:10,letterSpacing:4,textTransform:'uppercase',color:mu,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.nouvelleCollection.toUpperCase()}</span>
+            <span style={{fontSize:10,letterSpacing:4,textTransform:'uppercase',color:mu,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
+              {lang==='fr'
+                ? <>Collection <span style={{color:'#814D2D'}}>N'naho</span></>
+                : <><span style={{color:'#814D2D'}}>N'naho</span> Collection</>}
+            </span>
           </div>
           <div style={{height:300,background:p.bg,display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden',position:'relative',border:d?'none':'1px solid rgba(0,0,0,0.06)'}}>
             {showFallback ? (

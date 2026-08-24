@@ -3,9 +3,9 @@ export type Lang = 'fr' | 'en';
 export const tr = {
   fr: {
     collection:'Collection', histoire:'Histoire', contact:'Contact', panier:'Panier',
-    heroSub:'Nouvelle Collection 2026', heroCta:'Explorer', heroStory:'Notre histoire',
+    heroSub:"Collection N'naho 2026", heroCta:'Explorer', heroStory:'Notre histoire',
     heroTagline:"Vêtements qui portent l'âme du bois d'ébène, rares, profonds, intemporels.",
-    scroll:'Défiler', nouvelleCollection:'Nouvelle Collection', faitAvecAme:'Fait Avec Âme',
+    scroll:'Défiler', nouvelleCollection:"Collection N'naho", faitAvecAme:'Fait Avec Âme',
     sectionFeatured:'Collection', featuredTitle:'Nouvelle Saison', seeAll:'Voir tout',
     rotateHint:'Glissez les cartes pour les pivoter en 3D',
     storySection:'Notre Histoire', storyTitleLine1:"L'essence", storyTitleLine2:"de l'ébène",
@@ -31,9 +31,9 @@ export const tr = {
   },
   en: {
     collection:'Collection', histoire:'Story', contact:'Contact', panier:'Cart',
-    heroSub:'New Collection 2026', heroCta:'Explore', heroStory:'Our story',
+    heroSub:"N'naho Collection 2026", heroCta:'Explore', heroStory:'Our story',
     heroTagline:'Clothing that carries the soul of ebony wood, rare, deep, timeless.',
-    scroll:'Scroll', nouvelleCollection:'New Collection', faitAvecAme:'Made With Soul',
+    scroll:'Scroll', nouvelleCollection:"N'naho Collection", faitAvecAme:'Made With Soul',
     sectionFeatured:'Collection', featuredTitle:'New Season', seeAll:'See all',
     rotateHint:'Drag the cards to rotate them in 3D',
     storySection:'Our Story', storyTitleLine1:'The essence', storyTitleLine2:'of ebony',
