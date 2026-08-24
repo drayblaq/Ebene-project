@@ -113,7 +113,7 @@ a { color: inherit; text-decoration: none; }
 
   /* Footer */
   .footer-root   { padding: 40px 24px !important; }
-  .footer-top    { flex-direction: column !important; align-items: flex-start !important; gap: 20px !important; margin-bottom: 32px !important; }
+  .footer-top    { flex-direction: row !important; align-items: center !important; justify-content: space-between !important; margin-bottom: 32px !important; }
   .footer-bottom { text-align: center !important; }
 
   /* Newsletter */

@@ -9,11 +9,11 @@ export default function Footer() {
   const T = tr[lang];
   return (
     <footer className="footer-root" style={{background:'#000000',padding:'56px 80px',borderTop:'1px solid rgba(255,255,255,0.05)'}}>
-      <div className="footer-top" style={{display:'flex',justifyContent:'flex-start',alignItems:'center',marginBottom:52,flexWrap:'wrap',gap:48}}>
+      <div className="footer-top" style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:52}}>
+        <a href="https://www.instagram.com/_xwe.ebene" target="_blank" rel="noreferrer" className="nav-lnk" style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#FFFFFF',fontWeight:700}}>Instagram</a>
         <Link href="/" style={{display:'flex',alignItems:'center'}}>
           <Image src="/images/logo+text1.png" alt="Ébène" width={130} height={38} style={{height:38,width:'auto',objectFit:'contain'}} />
         </Link>
-        <a href="https://www.instagram.com/_xwe.ebene" target="_blank" rel="noreferrer" className="nav-lnk" style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#FFFFFF',fontWeight:700}}>Instagram</a>
       </div>
       <div className="footer-bottom" style={{paddingTop:28,borderTop:'1px solid rgba(255,255,255,0.05)',textAlign:'center'}}>
         <p style={{fontSize:11,color:'#FFFFFF',fontWeight:600,margin:0,letterSpacing:1}}>© 2026 Ébène · Cotonou, République du Bénin</p>
