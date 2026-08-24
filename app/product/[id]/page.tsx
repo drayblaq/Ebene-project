@@ -49,7 +49,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
       <div className="product-grid" style={{display:'grid',gridTemplateColumns:'1fr 1fr',minHeight:'calc(100vh - 100px)'}}>
 
         {/* LEFT — product image */}
-        <div className="product-img-col" style={{background:p.bg,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',position:'sticky',top:100,height:'calc(100vh - 100px)',overflow:'hidden',border:'1px solid rgba(0,0,0,0.06)',gap:20}}>
+        <div className="product-img-col" style={{background:p.bg,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',position:'sticky',top:100,height:'calc(100vh - 100px)',overflow:'hidden',gap:20}}>
           <div style={{position:'relative',width:'85%',maxWidth:460,aspectRatio:'4/5'}}>
             <Image
               src={showBack && p.imageBack ? p.imageBack : p.image}

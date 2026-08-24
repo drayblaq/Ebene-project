@@ -71,12 +71,9 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
 
   return (
     <div ref={scRef} className="card-scene" onClick={handleCardClick} style={{marginTop:offsetTop,flexShrink:0,cursor:'grab'}}>
-      <div style={{display:'flex',justifyContent:'center'}}>
-        <div style={{width:1.5,height:60,background:`linear-gradient(to bottom,transparent,${d?'#555':'#bbb'})`}} />
-      </div>
       <div ref={cardRef} className="card-3d">
         {/* FRONT */}
-        <div className="card-face" style={{background:bg,boxShadow:d?'4px 8px 40px rgba(0,0,0,0.3)':'4px 8px 28px rgba(0,0,0,0.08)'}}>
+        <div className="card-face" style={{background:bg,boxShadow:d?'4px 8px 40px rgba(0,0,0,0.3)':'4px 8px 28px rgba(0,0,0,0.08)',display:'flex',flexDirection:'column'}}>
           <div style={{padding:16,display:'flex',flexDirection:'column',alignItems:'center',borderBottom:`1px solid ${d?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.06)'}`}}>
             <div style={{width:13,height:13,borderRadius:'50%',border:`1.5px solid ${d?'rgba(255,255,255,0.15)':'rgba(0,0,0,0.15)'}`,marginBottom:12,background:d?'rgba(255,255,255,0.04)':'rgba(0,0,0,0.03)'}} />
             <span style={{fontSize:10,letterSpacing:4,textTransform:'uppercase',color:mu,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
@@ -97,7 +94,7 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
             )}
             {badge && <div style={{position:'absolute',bottom:10,right:10,background:badgeBg,color:'#FFFFFF',fontSize:9,letterSpacing:2,padding:'4px 10px',borderRadius:20,textTransform:'uppercase',fontWeight:600}}>{badge}</div>}
           </div>
-          <div style={{padding:'16px 20px 20px'}}>
+          <div style={{padding:'16px 20px 20px',marginTop:'auto'}}>
             <h3 style={{fontFamily:"'Joti One',cursive",fontSize:21,margin:'0 0 4px',lineHeight:1.2,color:fg,fontWeight:400}}>{name}</h3>
             <p style={{fontSize:11,color:mu,letterSpacing:2,textTransform:'uppercase',margin:'0 0 12px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{mat}</p>
             <div style={{display:'flex',gap:5,marginBottom:14,flexWrap:'wrap'}}>

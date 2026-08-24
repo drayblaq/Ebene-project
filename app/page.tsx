@@ -13,6 +13,8 @@ export default function Home() {
   const { lang, addToCart } = useApp();
   const T = tr[lang];
   const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [subStatus, setSubStatus] = useState<'idle'|'loading'|'success'|'error'>('idle');
   const offsets = [0, 36, 18, 52];
 
   // Countdown to August 24 2026
@@ -39,12 +41,34 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
+  async function handleSubscribe(e: React.FormEvent) {
+    e.preventDefault();
+    const trimmed = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return;
+    setSubStatus('loading');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? '',
+          subject: "New Ébène newsletter signup",
+          email: trimmed,
+        }),
+      });
+      const data = await res.json();
+      setSubStatus(data.success ? 'success' : 'error');
+    } catch {
+      setSubStatus('error');
+    }
+  }
+
   return (
     <>
       {/* HERO */}
       <section className="sec-hero" style={{height:'100vh',background:'#FFFFFF',display:'grid',gridTemplateColumns:'1fr 1fr',position:'relative',overflow:'hidden'}}>
         <div className="sec-hero-text" style={{display:'flex',flexDirection:'column',justifyContent:'center',padding:'90px 56px 60px 80px',position:'relative',zIndex:2}}>
-          <p style={{fontSize:11,letterSpacing:6,textTransform:'uppercase',color:'#000000',margin:'0 0 28px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
+          <p style={{fontSize:11,letterSpacing:6,textTransform:'uppercase',color:'#000000',margin:'0 0 16px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
             {lang==='fr'
               ? <>Collection <span style={{color:'#814D2D'}}>N'naho</span> 2026</>
               : <><span style={{color:'#814D2D'}}>N'naho</span> Collection 2026</>}
@@ -172,10 +196,26 @@ export default function Home() {
           <p style={{fontSize:12,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 24px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.stayConnected}</p>
           <h2 style={{fontFamily:"'Joti One',cursive",fontSize:'clamp(34px,3.8vw,58px)',color:'#FFFFFF',margin:'0 0 20px',lineHeight:1.1}}>{T.newsletterTitle}</h2>
           <p style={{color:'#FFFFFF',fontSize:15,fontWeight:400,maxWidth:360,margin:'0 auto 52px',lineHeight:1.8,fontFamily:"'Aoboshi One',sans-serif"}}>{T.newsletterDesc}</p>
-          <div className="newsletter-form">
-            <input type="email" placeholder={T.emailPlaceholder} style={{flex:1,border:'1.5px solid rgba(255,255,255,0.15)',background:'transparent',color:'#FFFFFF',padding:'16px 22px',fontSize:13,fontWeight:400,letterSpacing:1,borderRight:'none',fontFamily:"'Aoboshi One',sans-serif"}} />
-            <button className="btn-ol btn-ol-ac" style={{whiteSpace:'nowrap',borderLeft:'none'}}>{T.subscribe} →</button>
-          </div>
+          {subStatus === 'success' ? (
+            <p style={{color:'#814D2D',fontSize:14,fontWeight:700,letterSpacing:2,fontFamily:"'Aoboshi One',sans-serif",margin:0}}>{T.newsletterSuccess}</p>
+          ) : (
+            <form className="newsletter-form" onSubmit={handleSubscribe} noValidate>
+              <input
+                type="email"
+                placeholder={T.emailPlaceholder}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                disabled={subStatus === 'loading'}
+                style={{flex:1,border:'1.5px solid rgba(255,255,255,0.15)',background:'transparent',color:'#FFFFFF',padding:'16px 22px',fontSize:13,fontWeight:400,letterSpacing:1,borderRight:'none',fontFamily:"'Aoboshi One',sans-serif"}}
+              />
+              <button type="submit" disabled={subStatus === 'loading'} className="btn-ol btn-ol-ac" style={{whiteSpace:'nowrap',borderLeft:'none',opacity:subStatus==='loading'?0.6:1}}>
+                {subStatus === 'loading' ? '…' : `${T.subscribe} →`}
+              </button>
+            </form>
+          )}
+          {subStatus === 'error' && (
+            <p style={{color:'#cc4444',fontSize:12,fontWeight:700,letterSpacing:1,fontFamily:"'Aoboshi One',sans-serif",margin:'12px 0 0'}}>{T.newsletterError}</p>
+          )}
         </div>
       </section>
     </>

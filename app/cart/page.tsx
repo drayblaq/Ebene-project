@@ -25,10 +25,16 @@ export default function Cart() {
   const IG_DM = 'https://ig.me/m/_xwe.ebene';
   const [copied, setCopied] = useState(false);
 
-  const orderText = cart.map(i=>`• ${lang==='fr'?i.name:i.nameEn} Taille ${i.size} x${i.qty}`).join('\n');
+  const orderText = cart.map(i=>{
+    const itemName = lang==='fr'?i.name:i.nameEn;
+    const lineTotal = formatFCFA(i.price*i.qty);
+    return lang==='fr'
+      ? `• ${itemName} · Taille ${i.size} × ${i.qty} — ${lineTotal}`
+      : `• ${itemName} · Size ${i.size} × ${i.qty} — ${lineTotal}`;
+  }).join('\n');
   const fullMessage = lang==='fr'
-    ? `Bonjour Ébène ! Je voudrais précommander :\n${orderText}\n\nMerci`
-    : `Hello Ébène! I'd like to pre-order:\n${orderText}\n\nThank you`;
+    ? `Bonjour Ébène ! Je voudrais précommander :\n${orderText}\n\nTotal : ${formatFCFA(total)}\n\nMerci`
+    : `Hello Ébène! I'd like to pre-order:\n${orderText}\n\nTotal: ${formatFCFA(total)}\n\nThank you`;
 
   function handleCopy() {
     try { navigator.clipboard.writeText(fullMessage); } catch {}

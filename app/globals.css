@@ -57,9 +57,9 @@ a { color: inherit; text-decoration: none; }
 /* Lifestyle gallery caption */
 .lifestyle-caption { padding: 36px 48px; text-align: center; }
 
-/* Hero wordmark — transparent PNG, scales naturally to column width */
-.hero-wm-clip { margin-bottom: 20px; }
-.hero-wm-img  { width: 100%; max-width: 520px; height: auto; display: block; }
+/* Hero wordmark — transparent PNG fills column width; minimal padding in the file itself */
+.hero-wm-clip { margin-bottom: 16px; }
+.hero-wm-img  { width: 100%; height: auto; display: block; }
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 768px) {
