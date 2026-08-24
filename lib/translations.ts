@@ -39,7 +39,7 @@ export const tr = {
     sectionFeatured:'Collection', featuredTitle:'New Season', seeAll:'See all',
     rotateHint:'Drag the cards to rotate them in 3D',
     storySection:'Our Story', storyTitleLine1:'The Essence', storyTitleLine2:'of Ébène',
-    storyP1:"Ébène was born from a fascination with the richness, density, and depth of African culture — qualities that echo those of ebony, one of the densest and most precious woods in the world.",
+    storyP1:"Ébène was born from a fascination with the richness, density, and depth of African culture, qualities that echo those of ebony, one of the densest and most precious woods in the world.",
     storyP2:"Through each of our creations, we seek to embody that same depth: a strong identity, a living heritage, and a timeless elegance.",
     meetUs:'Meet us', pieces:'Pieces', matieres:'Materials', vision:'Vision',
     word1:'Rarity', word2:'Depth', word3:'Timeless', word4:'Soul',
