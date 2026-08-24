@@ -27,14 +27,14 @@ export const products: Product[] = [
     desc: 'Notre première pièce signature, un polo structuré aux couleurs Terracotta, orné de notre premier motif Ébène. Disponible en précommande.',
     descEn: 'Our first signature piece, a structured polo in Terracotta tones, adorned with our first Ébène motif. Available for pre-order.',
     cat: 'shirts',
-    price: 0,
+    price: 25000,
     badge: 'PRÉCOMMANDE',
     badgeEn: 'PRE-ORDER',
     sizes: ['S', 'M', 'L', 'XL'],
     dark: false,
     bg: '#FFFFFF',
-    image: '/images/polo-front-v2.jpeg',
-    imageBack: '/images/polo-back-v2.jpeg',
+    image: '/images/polo-back-v2.jpeg',
+    imageBack: '/images/polo-front-v2.jpeg',
   },
 ];
 

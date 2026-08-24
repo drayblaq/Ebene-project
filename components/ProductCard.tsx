@@ -85,7 +85,7 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
                 : <><span style={{color:'#814D2D'}}>N'naho</span> Collection</>}
             </span>
           </div>
-          <div style={{height:300,background:p.bg,display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden',position:'relative',border:d?'none':'1px solid rgba(0,0,0,0.06)'}}>
+          <div style={{height:300,background:p.bg,display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden',position:'relative'}}>
             {showFallback ? (
               <div style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center',padding:'0 16px',opacity:isSO?0.3:1}}>
                 <span style={{fontFamily:"'Joti One',cursive",fontSize:15,textAlign:'center',lineHeight:1.3,color:d?'rgba(255,255,255,0.5)':'rgba(0,0,0,0.25)',fontStyle:'italic'}}>{name}</span>
@@ -104,7 +104,7 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
               {p.sizes.map(s=><span key={s} style={{fontSize:10,border:`1px solid ${d?'rgba(255,255,255,0.2)':'rgba(0,0,0,0.2)'}`,color:fg,padding:'4px 8px',letterSpacing:1,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{s}</span>)}
             </div>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-              <span style={{fontFamily:"'Joti One',cursive",fontSize:p.price===0?12:16,color:isSO?mu:fg,letterSpacing:p.price===0?1:0}}>{p.price===0?T.priceTbd:formatFCFA(p.price)}</span>
+              <span style={{fontFamily:"'Joti One',cursive",fontSize:16,color:isSO?mu:fg}}>{formatFCFA(p.price)}</span>
               <button onClick={e=>{e.stopPropagation();onAdd(p);}} disabled={isSO} style={{width:40,height:40,background:isSO?'#aaa':d?'#814D2D':'#000000',border:'none',borderRadius:'50%',color:'#FFFFFF',display:'flex',alignItems:'center',justifyContent:'center',cursor:isSO?'not-allowed':'pointer',flexShrink:0}}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               </button>
