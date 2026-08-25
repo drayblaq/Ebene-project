@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SplashScreen from '@/components/SplashScreen';
 import MusicToggle from '@/components/MusicToggle';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: 'Ébène · Cotonou, Bénin',
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
           <Footer />
           <MusicToggle />
+          <Analytics />
         </AppProvider>
       </body>
     </html>
