@@ -8,6 +8,7 @@ export type Product = {
   descEn: string;
   cat: 'shirts' | 'trousers' | 'caps' | 'dresses' | 'jackets';
   price: number;
+  priceEur?: number;
   badge: string;
   badgeEn?: string;
   sizes: string[];
@@ -28,6 +29,7 @@ export const products: Product[] = [
     descEn: 'Our first signature piece, a structured polo in Terracotta tones, adorned with our first Ébène motif. Available for pre-order.',
     cat: 'shirts',
     price: 25000,
+    priceEur: 40,
     badge: 'PRÉCOMMANDE',
     badgeEn: 'PRE-ORDER',
     sizes: ['S', 'M', 'L', 'XL'],

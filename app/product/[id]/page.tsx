@@ -124,6 +124,12 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
             </div>
           )}
 
+          <div style={{marginBottom:28}}>
+            <span style={{fontFamily:"'Joti One',cursive",fontSize:28,color:'#000000'}}>
+              {formatFCFA(p.price)}{p.priceEur ? <span style={{fontSize:20,opacity:0.5}}> / {p.priceEur}€</span> : null}
+            </span>
+          </div>
+
           <div style={{display:'flex',flexDirection:'column',gap:12,maxWidth:380}}>
             <button
               onClick={handleAdd}
