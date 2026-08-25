@@ -9,7 +9,7 @@ import MusicToggle from '@/components/MusicToggle';
 export const metadata: Metadata = {
   title: 'Ébène · Cotonou, Bénin',
   description: "Vêtements qui portent l'âme du bois d'ébène. Mode contemporaine, Cotonou, République du Bénin.",
-  icons: { icon: '/images/browse.png', apple: '/images/browse.png' },
+  icons: { icon: '/images/browser.png', apple: '/images/browser.png' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
