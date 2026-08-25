@@ -126,7 +126,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
 
           <div style={{marginBottom:28}}>
             <span style={{fontFamily:"'Joti One',cursive",fontSize:28,color:'#000000'}}>
-              {formatFCFA(p.price)}{p.priceEur ? <span style={{fontSize:20,opacity:0.5}}> / {p.priceEur}€</span> : null}
+              {formatFCFA(p.price)}{p.priceEur ? <span style={{fontSize:20,color:'#000000',fontFamily:"'Aoboshi One',sans-serif",fontWeight:700}}> / {p.priceEur}€</span> : null}
             </span>
           </div>
 

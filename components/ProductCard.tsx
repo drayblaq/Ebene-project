@@ -105,7 +105,7 @@ export default function ProductCard({ product: p, lang, onAdd, offsetTop = 0 }: 
               {p.sizes.map(s=><span key={s} style={{fontSize:10,border:`1px solid ${d?'rgba(255,255,255,0.2)':'rgba(0,0,0,0.2)'}`,color:fg,padding:'4px 8px',letterSpacing:1,fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{s}</span>)}
             </div>
             <span style={{fontFamily:"'Joti One',cursive",fontSize:18,color:isSO?mu:fg,display:'block'}}>
-              {formatFCFA(p.price)}{p.priceEur ? <span style={{fontSize:14,opacity:0.6}}> / {p.priceEur}€</span> : null}
+              {formatFCFA(p.price)}{p.priceEur ? <span style={{fontSize:14,color:isSO?mu:fg,fontFamily:"'Aoboshi One',sans-serif",fontWeight:700}}> / {p.priceEur}€</span> : null}
             </span>
           </div>
         </div>
