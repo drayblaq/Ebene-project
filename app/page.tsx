@@ -84,7 +84,9 @@ export default function Home() {
           </div>
         </div>
         <div className="sec-hero-img" style={{position:'relative',overflow:'hidden'}}>
-          <Image src="/images/2.jpg.jpeg" alt="Ébène" fill className="animate-float" style={{objectFit:'contain',objectPosition:'right top',transform:'scale(1.28)',transformOrigin:'right top'}} priority />
+          <div style={{position:'absolute',top:0,right:0,width:'115%',height:'115%'}}>
+            <Image src="/images/2.jpg.jpeg" alt="Ébène" fill className="animate-float" style={{objectFit:'contain',objectPosition:'right top'}} priority />
+          </div>
           <div style={{position:'absolute',inset:0,background:'linear-gradient(to right,rgba(255,255,255,0.12),transparent)',pointerEvents:'none',zIndex:1}}/>
           <div style={{position:'absolute',bottom:40,right:40,width:88,height:88,zIndex:2}} className="animate-spin-text">
             <svg viewBox="0 0 100 100" width="88" height="88">
