@@ -161,19 +161,11 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
     <section style={{background:'#000000'}}>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:3}}>
         <div style={{position:'relative',aspectRatio:'2/3',overflow:'hidden'}}>
-          <Image src="/images/9.png" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
+          <Image src="/images/SAVE_20260831_114350.jpg" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
         </div>
         <div style={{position:'relative',aspectRatio:'2/3',overflow:'hidden'}}>
-          <Image src="/images/11.png" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
+          <Image src="/images/SAVE_20260831_114409.jpg" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
         </div>
-      </div>
-      <div className="lifestyle-caption" style={{padding:'36px 48px',textAlign:'center'}}>
-        <p style={{fontSize:10,letterSpacing:5,textTransform:'uppercase',color:'#814D2D',margin:'0 0 6px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>
-          {lang==='fr'?'POLO ÉBÈNE / PORTÉ':'ÉBÈNE POLO / WORN'}
-        </p>
-        <p style={{fontSize:13,color:'#FFFFFF',margin:0,fontFamily:"'Aoboshi One',sans-serif",fontWeight:400,letterSpacing:1}}>
-          {lang==='fr'?'Cotonou, Bénin · 2026':'Cotonou, Benin · 2026'}
-        </p>
       </div>
     </section>
     </>
