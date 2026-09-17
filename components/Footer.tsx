@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
 import { tr } from '@/lib/translations';
+import DevContactLinks from './DevContactLinks';
 
 export default function Footer() {
   const { lang } = useApp();
@@ -17,6 +18,10 @@ export default function Footer() {
       </div>
       <div className="footer-bottom" style={{paddingTop:28,borderTop:'1px solid rgba(255,255,255,0.05)',textAlign:'center'}}>
         <p style={{fontSize:11,color:'#FFFFFF',fontWeight:600,margin:0,letterSpacing:1}}>© 2026 Ébène · Cotonou, République du Bénin</p>
+        <div style={{marginTop:12,display:'flex',alignItems:'center',justifyContent:'center',flexWrap:'wrap',gap:4}}>
+          <span style={{fontSize:10,color:'#FFFFFF',fontWeight:600,letterSpacing:1}}>{T.devCredit}</span>
+          <DevContactLinks variant="icon" color="#FFFFFF" />
+        </div>
       </div>
     </footer>
   );

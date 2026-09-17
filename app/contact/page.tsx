@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useApp } from '@/context/AppContext';
 import { tr } from '@/lib/translations';
+import DevContactLinks from '@/components/DevContactLinks';
 
 export default function Contact() {
   const { lang } = useApp();
@@ -59,6 +60,12 @@ export default function Contact() {
               <p style={{fontSize:12,letterSpacing:3,textTransform:'uppercase',color:'#814D2D',margin:'0 0 14px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.social}</p>
               <div style={{display:'flex',gap:24}}>
                 <a href="https://www.instagram.com/_xwe.ebene" target="_blank" rel="noreferrer" className="nav-lnk" style={{fontSize:12,letterSpacing:2,textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>Instagram</a>
+              </div>
+            </div>
+            <div style={{marginTop:8,paddingTop:24,borderTop:'1px solid rgba(0,0,0,0.1)'}}>
+              <p style={{fontSize:11,letterSpacing:3,textTransform:'uppercase',color:'#814D2D',margin:'0 0 12px',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"}}>{T.devSection}</p>
+              <div style={{display:'flex',gap:8,marginLeft:-8}}>
+                <DevContactLinks variant="label" color="#000000" />
               </div>
             </div>
           </div>
