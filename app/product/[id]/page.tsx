@@ -164,7 +164,7 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
           <Image src="/images/SAVE_20260831_114350.jpg" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
         </div>
         <div style={{position:'relative',aspectRatio:'2/3',overflow:'hidden'}}>
-          <Image src="/images/SAVE_20260831_114409.jpg" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
+          <Image src="/images/4F1B9FF7-D65F-4EE9-8F44-47CB4280FB2A.jpg.jpeg" alt="Polo Ébène porté" fill style={{objectFit:'cover',objectPosition:'center top'}} />
         </div>
       </div>
     </section>
