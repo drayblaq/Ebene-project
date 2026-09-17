@@ -8,7 +8,7 @@ export const tr = {
     scroll:'Défiler', nouvelleCollection:"Collection N'naho", faitAvecAme:'Fait Avec Âme',
     sectionFeatured:'Collection', featuredTitle:'Nouvelle Saison', seeAll:'Voir tout',
     rotateHint:'Glissez les cartes pour les pivoter en 3D',
-    storySection:'Notre Histoire', storyTitleLine1:"L'essence", storyTitleLine2:"de l'ébène",
+    storySection:'Notre Histoire', storyTitleLine1:"L'essence", storyTitleLine2:"d'ébène",
     storyP1:"Ébène est née d'une fascination pour la richesse, la densité et la profondeur de la culture africaine, des qualités qui rappellent celles de l'ébène, l'un des bois les plus denses et les plus précieux au monde.",
     storyP2:"À travers chacune de nos créations, nous cherchons à incarner cette même profondeur : une identité forte, un héritage vivant et une élégance intemporelle.",
     meetUs:'Nous rencontrer', pieces:'Pièces', matieres:'Matières', vision:'Vision',

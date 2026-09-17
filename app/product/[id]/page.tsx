@@ -28,7 +28,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   const name = lang === 'fr' ? p.name : p.nameEn;
   const mat = lang === 'fr' ? p.mat : p.matEn;
   const desc = lang === 'fr' ? p.desc : p.descEn;
-  const badge = lang === 'fr' ? p.badge : (p.badgeEn ?? p.badge);
 
   const [selectedSize, setSelectedSize] = useState(p.sizes[0]);
   const [added, setAdded] = useState(false);
@@ -68,13 +67,6 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
                 {lang==='fr'?'Arrière':'Back'}
               </button>
             </div>
-          )}
-          {badge && (
-            <div style={{
-              background:p.badge==='NEW'?'#000000':p.badge==='SOLD OUT'?'#666':'#814D2D',
-              color:'#FFFFFF',fontSize:9,letterSpacing:3,padding:'6px 16px',
-              textTransform:'uppercase',fontWeight:700,fontFamily:"'Aoboshi One',sans-serif"
-            }}>{badge}</div>
           )}
         </div>
 
